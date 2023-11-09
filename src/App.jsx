@@ -1,12 +1,41 @@
-import { useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 
 const defaultState = {
   trainings: 0,
   moneys: 0,
   trainingsPerTick: 0,
   trainingMultiplier: 1,
-  moneysPerTraining: 1000
+  moneysPerTraining: 1000,
 };
+
+function App() {
+  const [
+    {
+      trainings,
+      moneys,
+      trainingsPerTick,
+      trainingMuliplier,
+      moneysPerTraining,
+    },
+    dispatch,
+  ] = useReducer(reducer, defaultState);
+
+  useInterval(() => {
+    dispatch({ type: "tick" });
+  }, 1000);
+
+  return (
+    <>
+      <div> {trainings} personnes formées </div>
+      <div> {moneys} digidollars disponibles </div>
+      <div>
+        <button onClick={() => dispatch({ type: "click" })}>
+          Clicker pour former
+        </button>
+      </div>
+    </>
+  );
+}
 
 const reducer = (
   state,
@@ -22,17 +51,21 @@ const reducer = (
     case "tick": {
       return {
         ...state,
-        trainings: state.trainings + trainingsPerTick * trainingMultiplier,
+        trainings:
+          state.trainings + state.trainingsPerTick * state.trainingMultiplier,
         moneys:
           state.moneys +
-          state.trainingsPerTick * state.trainingMultiplier * state.moneysPerTraining,
+          state.trainingsPerTick *
+            state.trainingMultiplier *
+            state.moneysPerTraining,
       };
     }
     case "click": {
       return {
         ...state,
         trainings: state.trainings + state.trainingMultiplier,
-        moneys: state.moneys + state.trainingMultiplier * state.moneysPerTraining,
+        moneys:
+          state.moneys + state.trainingMultiplier * state.moneysPerTraining,
       };
     }
     case "buy": {
@@ -47,27 +80,30 @@ const reducer = (
   }
 };
 
-function App() {
-  const [
-    {
-      trainings,
-      moneys,
-      trainingsPerTick,
-      trainingMuliplier,
-      moneysPerTraining,
-    },
-    dispatch,
-  ] = useReducer(reducer, defaultState);
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
 
-  return (
-    <>
-      <div> {trainings} personnes formées </div>
-      <div> {moneys} digidollars disponibles </div>
-      <div>
-        <button onClick={() => dispatch({type: "click"})}>Clicker pour former</button>
-      </div>
-    </>
-  );
+  // Remember the latest callback function.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval when the component mounts and clear it when it unmounts.
+  useEffect(() => {
+    function tick() {
+      if (savedCallback.current) {
+        savedCallback.current();
+      }
+    }
+
+    if (delay !== null) {
+      const intervalId = setInterval(tick, delay);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [delay]);
 }
 
 export default App;
