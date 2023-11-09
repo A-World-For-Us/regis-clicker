@@ -1,3 +1,35 @@
+/*
+  Bienvenue dans le RégisClicker
+
+  TODO:
+  (pour le projet en lui-même)
+  - [ ] Mettre les infos correctement dans le ReadMe
+  - [ ] Faire un projet propre (prettier, test, séparation en fichier tout ça)
+  - [ ] Petit CI
+  - [ ] Setup le déploiement automatique et le domaine (Amplify ?)
+
+  (pour le moteur de jeu)
+  - [ ] Créer les upgrades automatiquement depuis `upgrades.toml`
+  - [ ] Créer un système de pré-requis d'achat
+  - [ ] Gérer le nombre maximum d'achat répété de chaque upgrades
+  - [ ] Système de sauvegarde
+  - [ ] Système de pause
+  - [ ] Système de reset
+  - [ ] Système de haut fait
+  - [ ] Système de partage de haut-fait
+
+  (pour le front-end)
+  - [ ] Layout générals
+  - [ ] Clicker cools
+  - [ ] Boutons d'upgrade cools
+  - [ ] Afficher les infos sur l'état courant du jeu ?
+  - [ ] Animation à chaque clicks
+  - [ ] Animation et musiques d'ambiances
+
+  (pour la todo)
+  - [ ] Remplir mieux la todo
+*/
+
 import { useEffect, useReducer, useRef, useState } from "react";
 
 const defaultState = {
