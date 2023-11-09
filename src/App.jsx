@@ -81,7 +81,7 @@ const reducer = (
     type,
     cost = 0,
     trainingsPerTick = 0,
-    trainingMultiplier = 0,
+    trainingMultiplier = 1,
     moneysPerTraining = 0,
   },
 ) => {
@@ -111,7 +111,7 @@ const reducer = (
         ...state,
         moneys: state.moneys - cost,
         trainingsPerTick: state.trainingsPerTick + trainingsPerTick,
-        trainingMuliplier: state.trainingMuliplier + trainingMultiplier,
+        trainingMuliplier: state.trainingMuliplier * trainingMultiplier,
         moneysPerTraining: state.moneysPerTraining + moneysPerTraining,
       };
     }

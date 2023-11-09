@@ -1,0 +1,63 @@
+[[default]]
+name = "Formation Automatique"
+cost = 10_000
+trainingsPerTick = 1
+
+[[default]]
+name = "Méga Formation Automatique"
+cost = 8_000
+trainingsPerTick = 10
+
+[[features]]
+name = "Signature Électonique"
+cost = 15_000
+trainingsPerTick = 50
+max = 1
+
+[[features]]
+name = "Multi-Centre"
+cost = 50_000
+trainingsPerTick = 10
+trainingMultiplier = 1.25
+max = 10
+
+[[features]]
+name = "Certification Numérique"
+cost = 25_000
+moneysPerTraining = 5_000
+
+[[collaborators]]
+name = "Pétronille"
+cost = 100_000
+trainingMultiplier = 10
+max = 1
+
+[[collaborators]]
+name = "Kat Jépété"
+cost = 100_000_000
+trainingMultiplier = 100
+max = 1
+
+[[modality]]
+name = "Salle de classe"
+cost = 1_000_000
+trainingMultiplier = 15
+max = 1
+
+[[modality]]
+name = "Amphithéâtre"
+cost = 50_000_000
+trainingMultiplier = 50
+max = 1
+
+[[modality]]
+name = "MOOC"
+cost = 150_000_000
+trainingMultiplier = 100
+max = 1
+
+[[modality]]
+name = "Réalité Virtuelle"
+cost = 10_500_000_000
+trainingMultiplier = 1000
+max = 1
