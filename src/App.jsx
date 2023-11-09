@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 
 const defaultState = {
   trainings: 0,
@@ -9,16 +9,7 @@ const defaultState = {
 };
 
 function App() {
-  const [
-    {
-      trainings,
-      moneys,
-      trainingsPerTick,
-      trainingMuliplier,
-      moneysPerTraining,
-    },
-    dispatch,
-  ] = useReducer(reducer, defaultState);
+  const [{ trainings, moneys }, dispatch] = useReducer(reducer, defaultState);
 
   useInterval(() => {
     dispatch({ type: "tick" });
@@ -33,9 +24,56 @@ function App() {
           Clicker pour former
         </button>
       </div>
+      <Upgrade
+        name="AutoFormateur"
+        moneys={moneys}
+        baseCost={10000}
+        costIncreaseRate={1.05}
+        dispatch={dispatch}
+        dispatchValue={{ trainingsPerTick: 1 }}
+      />
+      <Upgrade
+        name="Multiplicateur"
+        moneys={moneys}
+        baseCost={20000}
+        costIncreaseRate={1.15}
+        dispatch={dispatch}
+        dispatchValue={{ trainingMultiplier: 1 }}
+      />
     </>
   );
 }
+
+const Upgrade = ({
+  name,
+  moneys,
+  baseCost,
+  costIncreaseRate,
+  dispatch,
+  dispatchValue,
+}) => {
+  const [cost, setCost] = useState(baseCost);
+  const [amount, setAmount] = useState(0);
+
+  const buy = () => {
+    dispatch({ ...dispatchValue, type: "buy", cost: cost });
+    setCost((it) => it * costIncreaseRate);
+    setAmount((it) => it + 1);
+  };
+
+  return (
+    <div>
+      <p>{name}</p>
+      <p>Vous en avez {amount}</p>
+      <p>Coût du prochain {cost} digidollars</p>
+      <div>
+        <button onClick={buy} disabled={moneys < cost}>
+          Acheter
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const reducer = (
   state,
