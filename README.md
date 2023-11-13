@@ -51,6 +51,12 @@ Automatically format the code with prettier
 
 - `npx prettier --write .`
 
+# Deployment
+
+This project is automatically deployed on [AWS Amplify](https://eu-west-1.console.aws.amazon.com/amplify/home?region=eu-west-1#/d2sk9y4ym3y2h6) on every push to `main`.
+
+The game is publicly available [here](https://main.d2sk9y4ym3y2h6.amplifyapp.com/)
+
 # Vite + React
 
 This project is scaffolded with Vite and uses React as the main view framework, read more about it here :
