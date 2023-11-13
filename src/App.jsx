@@ -1,36 +1,4 @@
-/*
-  Bienvenue dans le RégisClicker
-
-  TODO:
-  (pour le projet en lui-même)
-  - [ ] Mettre les infos correctement dans le ReadMe
-  - [ ] Faire un projet propre (prettier, test, séparation en fichier tout ça)
-  - [ ] Petit CI
-  - [ ] Setup le déploiement automatique et le domaine (Amplify ?)
-
-  (pour le moteur de jeu)
-  - [ ] Créer les upgrades automatiquement depuis `upgrades.toml`
-  - [ ] Créer un système de pré-requis d'achat
-  - [ ] Gérer le nombre maximum d'achat répété de chaque upgrades
-  - [ ] Système de sauvegarde
-  - [ ] Système de pause
-  - [ ] Système de reset
-  - [ ] Système de haut fait
-  - [ ] Système de partage de haut-fait
-
-  (pour le front-end)
-  - [ ] Layout générals
-  - [ ] Clicker cools
-  - [ ] Boutons d'upgrade cools
-  - [ ] Afficher les infos sur l'état courant du jeu ?
-  - [ ] Animation à chaque clicks
-  - [ ] Animation et musiques d'ambiances
-
-  (pour la todo)
-  - [ ] Remplir mieux la todo
-*/
-
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from 'react';
 
 const defaultState = {
   trainings: 0,
@@ -44,7 +12,7 @@ function App() {
   const [{ trainings, moneys }, dispatch] = useReducer(reducer, defaultState);
 
   useInterval(() => {
-    dispatch({ type: "tick" });
+    dispatch({ type: 'tick' });
   }, 1000);
 
   return (
@@ -52,7 +20,7 @@ function App() {
       <div> {trainings} personnes formées </div>
       <div> {moneys} digidollars disponibles </div>
       <div>
-        <button onClick={() => dispatch({ type: "click" })}>
+        <button onClick={() => dispatch({ type: 'click' })}>
           Clicker pour former
         </button>
       </div>
@@ -88,9 +56,9 @@ const Upgrade = ({
   const [amount, setAmount] = useState(0);
 
   const buy = () => {
-    dispatch({ ...dispatchValue, type: "buy", cost: cost });
-    setCost((it) => it * costIncreaseRate);
-    setAmount((it) => it + 1);
+    dispatch({ ...dispatchValue, type: 'buy', cost: cost });
+    setCost(it => it * costIncreaseRate);
+    setAmount(it => it + 1);
   };
 
   return (
@@ -118,7 +86,7 @@ const reducer = (
   },
 ) => {
   switch (type) {
-    case "tick": {
+    case 'tick': {
       return {
         ...state,
         trainings:
@@ -130,7 +98,7 @@ const reducer = (
             state.moneysPerTraining,
       };
     }
-    case "click": {
+    case 'click': {
       return {
         ...state,
         trainings: state.trainings + state.trainingMultiplier,
@@ -138,7 +106,7 @@ const reducer = (
           state.moneys + state.trainingMultiplier * state.moneysPerTraining,
       };
     }
-    case "buy": {
+    case 'buy': {
       return {
         ...state,
         moneys: state.moneys - cost,
