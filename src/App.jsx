@@ -1,4 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
+import totoro from './totoro_noel.jpeg';
+import totoroIcon from './totoro-icon.jpeg';
 
 const defaultState = {
   trainings: 0,
@@ -17,29 +19,36 @@ function App() {
 
   return (
     <>
-      <div> {trainings} personnes formées </div>
-      <div> {moneys} digidollars disponibles </div>
-      <div>
-        <button onClick={() => dispatch({ type: 'click' })}>
-          Clicker pour former
+      <main>
+        <p className="trainings">{Math.round(trainings)} Personnes formées</p>
+        <p className="moneys">{Math.round(moneys)}$ disponible</p>
+        <button className="clicker-wrapper">
+          <img
+            className="clicker"
+            src={totoro}
+            onClick={() => dispatch({ type: 'click' })}
+          />
+          <p>Cliquer pour commencer à donner des formations !</p>
         </button>
-      </div>
-      <Upgrade
-        name="AutoFormateur"
-        moneys={moneys}
-        baseCost={10000}
-        costIncreaseRate={1.05}
-        dispatch={dispatch}
-        dispatchValue={{ trainingsPerTick: 1 }}
-      />
-      <Upgrade
-        name="Multiplicateur"
-        moneys={moneys}
-        baseCost={20000}
-        costIncreaseRate={1.15}
-        dispatch={dispatch}
-        dispatchValue={{ trainingMultiplier: 1 }}
-      />
+      </main>
+      <aside>
+        <Upgrade
+          name="AutoFormateur"
+          moneys={moneys}
+          baseCost={10000}
+          costIncreaseRate={1.05}
+          dispatch={dispatch}
+          dispatchValue={{ trainingsPerTick: 1 }}
+        />
+        <Upgrade
+          name="Multiplicateur"
+          moneys={moneys}
+          baseCost={20000}
+          costIncreaseRate={1.15}
+          dispatch={dispatch}
+          dispatchValue={{ trainingMultiplier: 1 }}
+        />
+      </aside>
     </>
   );
 }
@@ -56,20 +65,28 @@ const Upgrade = ({
   const [amount, setAmount] = useState(0);
 
   const buy = () => {
-    dispatch({ ...dispatchValue, type: 'buy', cost: cost });
-    setCost(it => it * costIncreaseRate);
-    setAmount(it => it + 1);
+    if (moneys > cost) {
+      dispatch({ ...dispatchValue, type: 'buy', cost: cost });
+      setCost(it => it * costIncreaseRate);
+      setAmount(it => it + 1);
+    }
   };
 
   return (
-    <div>
-      <p>{name}</p>
-      <p>Vous en avez {amount}</p>
-      <p>Coût du prochain {cost} digidollars</p>
-      <div>
-        <button onClick={buy} disabled={moneys < cost}>
-          Acheter
-        </button>
+    <div className="upgrade-capsule" onClick={buy} disabled={moneys < cost}>
+      {moneys > cost ? (
+        <img className="upgrade-capsule__icon" src={totoroIcon} />
+      ) : (
+        <p className="upgrade-capsule__icon">🔒</p>
+      )}
+
+      <div className="upgrade-capsule__body">
+        <p>{name}</p>
+        <p>une petite description marrante</p>
+      </div>
+      <div className="upgrade-capsule__amount">
+        <p>x{amount}</p>
+        <p>{formatBigNumber(cost)}</p>
       </div>
     </div>
   );
@@ -116,6 +133,13 @@ const reducer = (
       };
     }
   }
+};
+
+const formatBigNumber = number => {
+  return Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    maximumFractionDigits: 1,
+  }).format(number);
 };
 
 function useInterval(callback, delay) {
