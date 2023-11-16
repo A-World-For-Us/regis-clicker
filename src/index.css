@@ -22,16 +22,16 @@ main {
 
 aside {
   padding: 1rem;
-  background-color: #d6001c;
+  background-color: #d70000;
   border-left: 10px solid #00873e;
-  width: 25%;
+  width: 30%;
 }
 
 .trainings {
   font-size: 3rem;
   line-height: 3rem;
   font-weight: bold;
-  color: #d6001c;
+  color: #d70000;
   text-shadow: #00873e 0.2rem 0.3rem;
 }
 
@@ -60,6 +60,13 @@ aside {
   width: 42%;
 }
 
+.upgrade-category {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: #00873e 0.1rem 0.1rem;
+}
+
 .upgrade-capsule {
   border: none;
   cursor: pointer;
@@ -69,11 +76,15 @@ aside {
   box-shadow: #00873e 3px 3px;
   color: white;
   display: grid;
-  grid-template-columns: 50px auto 50px;
+  grid-template-columns: 50px auto 100px;
   align-items: center;
   gap: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   user-select: none;
+}
+
+.upgrade-capsule__name {
+  font-size: 1.5rem;
 }
 
 .upgrade-capsule__icon {
@@ -86,4 +97,11 @@ aside {
 
 .upgrade-capsule__amount {
   text-align: right;
+}
+
+.debug {
+  font-family: sans-serif;
+  background-color: white;
+  color: black;
+  font-size: 1rem;
 }

@@ -1,6 +1,8 @@
+import toml from 'toml';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import totoro from './totoro_noel.jpeg';
 import totoroIcon from './totoro-icon.jpeg';
+import upgrades from './upgrades.toml?raw';
 
 const defaultState = {
   trainings: 0,
@@ -9,6 +11,8 @@ const defaultState = {
   trainingMultiplier: 1,
   moneysPerTraining: 1000,
 };
+
+const upgradesParsed = toml.parse(upgrades);
 
 function App() {
   const [{ trainings, moneys }, dispatch] = useReducer(reducer, defaultState);
@@ -20,8 +24,10 @@ function App() {
   return (
     <>
       <main>
-        <p className="trainings">{Math.round(trainings)} Personnes formées</p>
-        <p className="moneys">{Math.round(moneys)}$ disponible</p>
+        <p className="trainings">
+          {prettyBigNumber(trainings)} Personnes formées
+        </p>
+        <p className="moneys">{prettyBigNumber(moneys)}$ disponible</p>
         <button className="clicker-wrapper">
           <img
             className="clicker"
@@ -32,29 +38,69 @@ function App() {
         </button>
       </main>
       <aside>
-        <Upgrade
-          name="AutoFormateur"
-          moneys={moneys}
-          baseCost={10000}
-          costIncreaseRate={1.05}
-          dispatch={dispatch}
-          dispatchValue={{ trainingsPerTick: 1 }}
-        />
-        <Upgrade
-          name="Multiplicateur"
-          moneys={moneys}
-          baseCost={20000}
-          costIncreaseRate={1.15}
-          dispatch={dispatch}
-          dispatchValue={{ trainingMultiplier: 1 }}
-        />
+        {Object.entries({
+          collaborators: 'Collaborateurs',
+          features: 'Fonctionnalités',
+          modality: 'Modalités',
+        }).map(([key, name]) => (
+          <UpgradeCategory
+            key={key}
+            name={name}
+            upgrades={upgradesParsed[key]}
+            moneys={moneys}
+            dispatch={dispatch}
+          />
+        ))}
       </aside>
     </>
   );
 }
+import PropTypes from 'prop-types';
+
+const UpgradeCategory = ({ name, upgrades, moneys, dispatch }) => {
+  return (
+    <div>
+      <p className="upgrade-category">{name}</p>
+      {upgrades.map(upgrade => (
+        <Upgrade
+          key={upgrade.name}
+          name={upgrade.name}
+          description={upgrade.description}
+          baseCost={upgrade.cost}
+          costIncreaseRate={upgrade.costIncreaseRate || 1.1}
+          moneys={moneys}
+          dispatch={dispatch}
+          dispatchValue={{
+            trainingsPerTick: upgrade.trainingsPerTick || 0,
+            trainingMultiplier: upgrade.trainingMultiplier || 1,
+            moneysPerTraining: upgrade.moneysPerTraining || 0,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+UpgradeCategory.propTypes = {
+  name: PropTypes.string.isRequired,
+  upgrades: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      cost: PropTypes.number.isRequired,
+      costIncreaseRate: PropTypes.number,
+      trainingsPerTick: PropTypes.number,
+      trainingMultiplier: PropTypes.number,
+      moneysPerTraining: PropTypes.number,
+    }),
+  ).isRequired,
+  moneys: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 const Upgrade = ({
   name,
+  description,
   moneys,
   baseCost,
   costIncreaseRate,
@@ -81,8 +127,12 @@ const Upgrade = ({
       )}
 
       <div className="upgrade-capsule__body">
-        <p>{name}</p>
-        <p>une petite description marrante</p>
+        <p className="upgrade-capsule__name">{name}</p>
+        <p>{description}</p>
+        <div className="debug">
+          <p>Pour debug, ça fait quoi d'acheter ça :</p>
+          <p>{JSON.stringify(dispatchValue, null, 2)}</p>
+        </div>
       </div>
       <div className="upgrade-capsule__amount">
         <p>x{amount}</p>
@@ -90,6 +140,20 @@ const Upgrade = ({
       </div>
     </div>
   );
+};
+
+Upgrade.propTypes = {
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  moneys: PropTypes.number.isRequired,
+  baseCost: PropTypes.number.isRequired,
+  costIncreaseRate: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  dispatchValue: PropTypes.shape({
+    trainingsPerTick: PropTypes.number,
+    trainingMultiplier: PropTypes.number,
+    moneysPerTraining: PropTypes.number,
+  }).isRequired,
 };
 
 const reducer = (
@@ -128,7 +192,7 @@ const reducer = (
         ...state,
         moneys: state.moneys - cost,
         trainingsPerTick: state.trainingsPerTick + trainingsPerTick,
-        trainingMuliplier: state.trainingMuliplier * trainingMultiplier,
+        trainingMultiplier: state.trainingMultiplier * trainingMultiplier,
         moneysPerTraining: state.moneysPerTraining + moneysPerTraining,
       };
     }
@@ -138,9 +202,11 @@ const reducer = (
 const formatBigNumber = number => {
   return Intl.NumberFormat('en-US', {
     notation: 'compact',
-    maximumFractionDigits: 1,
   }).format(number);
 };
+
+const prettyBigNumber = number =>
+  Intl.NumberFormat('fr-Fr', { maximumFractionDigits: 0 }).format(number);
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();

@@ -1,21 +1,13 @@
-[[default]]
-name = "Formation Automatique"
-cost = 10_000
-trainingsPerTick = 1
-
-[[default]]
-name = "Méga Formation Automatique"
-cost = 8_000
-trainingsPerTick = 10
-
 [[features]]
 name = "Signature Électonique"
+description = "Pour les OPCO un peu trop tatillons."
 cost = 15_000
 trainingsPerTick = 50
 max = 1
 
 [[features]]
-name = "Multi-Centre"
+name = "Multi-Centres"
+description = "Avec un tiret et un S s'il vous plaît."
 cost = 50_000
 trainingsPerTick = 10
 trainingMultiplier = 1.25
@@ -23,41 +15,55 @@ max = 10
 
 [[features]]
 name = "Certification Numérique"
+description = "C'est comme un diplôme mais on a pas le droit de les appeler comme ça."
 cost = 25_000
 moneysPerTraining = 5_000
 
 [[collaborators]]
+name = "Régis"
+description = "Il est sympa mais il a un peu de mal avec les ordinateurs."
+cost = 1
+trainingsPerTick = 1
+max = 1
+
+[[collaborators]]
 name = "Pétronille"
+description = "Les jeunes avec leur TokTok savent utiliser les ordinateurs."
 cost = 100_000
 trainingMultiplier = 10
 max = 1
 
 [[collaborators]]
 name = "Kat Jépété"
+description = "L'intelligence artificielle c'est son dada."
 cost = 100_000_000
 trainingMultiplier = 100
 max = 1
 
 [[modality]]
 name = "Salle de classe"
+description = "C'est comme une salle de réunion mais avec des tables."
 cost = 1_000_000
 trainingMultiplier = 15
 max = 1
 
 [[modality]]
 name = "Amphithéâtre"
+description = "C'est comme une salle de classe mais avec des gradins."
 cost = 50_000_000
 trainingMultiplier = 50
 max = 1
 
 [[modality]]
 name = "MOOC"
+description = "Pour toucher plein de monde sans se fatiguer."
 cost = 150_000_000
 trainingMultiplier = 100
 max = 1
 
 [[modality]]
 name = "Réalité Virtuelle"
+description = "On a l'air bizarre mais on apprend bien."
 cost = 10_500_000_000
 trainingMultiplier = 1000
 max = 1
