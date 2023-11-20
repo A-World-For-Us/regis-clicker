@@ -9,7 +9,7 @@ const defaultState = {
   moneys: 0,
   trainingsPerTick: 0,
   trainingMultiplier: 1,
-  moneysPerTraining: 1000,
+  moneysPerTraining: 1,
 };
 
 const upgradesParsed = toml.parse(upgrades);
@@ -40,6 +40,8 @@ function App() {
       <aside>
         {Object.entries({
           collaborators: 'Collaborateurs',
+          trainings: 'Formations',
+          certifications: 'Certifications',
           features: 'Fonctionnalités',
           modality: 'Modalités',
         }).map(([key, name]) => (
@@ -70,6 +72,7 @@ const UpgradeCategory = ({ name, upgrades, moneys, dispatch }) => {
           costIncreaseRate={upgrade.costIncreaseRate || 1.1}
           moneys={moneys}
           dispatch={dispatch}
+          max={upgrade.max || Infinity}
           dispatchValue={{
             trainingsPerTick: upgrade.trainingsPerTick || 0,
             trainingMultiplier: upgrade.trainingMultiplier || 1,
@@ -96,6 +99,7 @@ UpgradeCategory.propTypes = {
   ).isRequired,
   moneys: PropTypes.number.isRequired,
   dispatch: PropTypes.func.isRequired,
+  max: PropTypes.number.isRequired,
 };
 
 const Upgrade = ({
@@ -106,12 +110,13 @@ const Upgrade = ({
   costIncreaseRate,
   dispatch,
   dispatchValue,
+  max,
 }) => {
   const [cost, setCost] = useState(baseCost);
   const [amount, setAmount] = useState(0);
 
   const buy = () => {
-    if (moneys > cost) {
+    if (moneys > cost && amount < max) {
       dispatch({ ...dispatchValue, type: 'buy', cost: cost });
       setCost(it => it * costIncreaseRate);
       setAmount(it => it + 1);
@@ -120,7 +125,7 @@ const Upgrade = ({
 
   return (
     <div className="upgrade-capsule" onClick={buy} disabled={moneys < cost}>
-      {moneys > cost ? (
+      {moneys > cost && amount < max ? (
         <img className="upgrade-capsule__icon" src={totoroIcon} />
       ) : (
         <p className="upgrade-capsule__icon">🔒</p>
@@ -135,8 +140,8 @@ const Upgrade = ({
         </div>
       </div>
       <div className="upgrade-capsule__amount">
-        <p>x{amount}</p>
-        <p>{formatBigNumber(cost)}</p>
+        <p>{amount >= max ? 'max' : 'x' + amount}</p>
+        <p>{amount < max && formatBigNumber(cost)}</p>
       </div>
     </div>
   );
@@ -149,6 +154,7 @@ Upgrade.propTypes = {
   baseCost: PropTypes.number.isRequired,
   costIncreaseRate: PropTypes.number.isRequired,
   dispatch: PropTypes.func.isRequired,
+  max: PropTypes.number.isRequired,
   dispatchValue: PropTypes.shape({
     trainingsPerTick: PropTypes.number,
     trainingMultiplier: PropTypes.number,

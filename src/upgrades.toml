@@ -3,7 +3,7 @@ name = "Signature Électonique"
 description = "Pour les OPCO un peu trop tatillons."
 cost = 15_000
 trainingsPerTick = 50
-max = 1
+max = 10
 
 [[features]]
 name = "Multi-Centres"
@@ -17,12 +17,13 @@ max = 10
 name = "Certification Numérique"
 description = "C'est comme un diplôme mais on a pas le droit de les appeler comme ça."
 cost = 25_000
-moneysPerTraining = 5_000
+moneysPerTraining = 5
+max = 10
 
 [[collaborators]]
 name = "Régis"
 description = "Il est sympa mais il a un peu de mal avec les ordinateurs."
-cost = 1
+cost = 10
 trainingsPerTick = 1
 max = 1
 
@@ -30,40 +31,94 @@ max = 1
 name = "Pétronille"
 description = "Les jeunes avec leur TokTok savent utiliser les ordinateurs."
 cost = 100_000
-trainingMultiplier = 10
+trainingMultiplier = 2
 max = 1
 
 [[collaborators]]
 name = "Kat Jépété"
 description = "L'intelligence artificielle c'est son dada."
 cost = 100_000_000
-trainingMultiplier = 100
+trainingMultiplier = 10
 max = 1
 
 [[modality]]
 name = "Salle de classe"
 description = "C'est comme une salle de réunion mais avec des tables."
 cost = 1_000_000
-trainingMultiplier = 15
+trainingMultiplier = 1.1
 max = 1
 
 [[modality]]
 name = "Amphithéâtre"
 description = "C'est comme une salle de classe mais avec des gradins."
 cost = 50_000_000
-trainingMultiplier = 50
+trainingMultiplier = 1.5
 max = 1
 
 [[modality]]
 name = "MOOC"
 description = "Pour toucher plein de monde sans se fatiguer."
 cost = 150_000_000
-trainingMultiplier = 100
+trainingMultiplier = 2
+moneysPerTraining = 100
 max = 1
 
 [[modality]]
 name = "Réalité Virtuelle"
 description = "On a l'air bizarre mais on apprend bien."
 cost = 10_500_000_000
-trainingMultiplier = 1000
+trainingMultiplier = 2
+moneysPerTraining = 1000
+max = 1
+
+[[certifications]]
+name = "Qualiopi"
+description = "Avec Digiforma c'est facile."
+cost = 1000
+trainingsPerTick = 10
+max = 1
+
+[[certifications]]
+name = "Audit de surveillance"
+description = "Il faut pas se laisser aller"
+cost = 1500
+trainingsPerTick = 10
+moneysPerTraining = 1
+max = 10
+
+[[certifications]]
+name = "Kliopi"
+description = "Ils savent vraiment plus quoi inventer au gouvernement."
+cost = 3_000
+trainingsPerTick = 25
+moneysPerTraining = 2
+max = 100
+
+[[trainings]]
+name = "Initiation au Numérique"
+description = "Pour que Régis ne fasse plus planter l'ordinateur."
+cost = 25
+trainingsPerTick = 1
+max = 1
+
+[[trainings]]
+name = "Sécurité Informatique pour Régis"
+description = "Apprendre à Régis à ne pas cliquer sur tous les liens."
+cost = 50
+moneysPerTraining = 1
+max = 1
+
+[[trainings]]
+name = "Développement Web pour Régis"
+description = "Pour que Régis puisse mettre à jour le site web tout seul."
+cost = 100
+trainingsPerTick = 5
+max = 1
+
+[[trainings]]
+name = "Gestion de Projet Numérique pour Régis"
+description = "Régis va apprendre à utiliser les outils de gestion de projet."
+cost = 250
+trainingsPerTick = 5
+moneysPerTraining = 1
 max = 1

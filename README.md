@@ -17,18 +17,19 @@ During the course of the Game, Regis will become exponentionally more productive
 
 ## Engine
 
-- [ ] Automatically generate upgrades from `upgrades.toml`
-- [ ] Develop a prerequisite purchase system
-- [ ] Manage the maximum number of repeated purchases for each upgrade
+- [x] Automatically generate upgrades from `upgrades.toml`
+- [ ] _SUPER IMPORTANT_ Develop a prerequisite purchase system
+- [x] Manage the maximum number of repeated purchases for each upgrade
 - [ ] Save system
 - [ ] Pause system
 - [ ] Reset system
-- [ ] Achievement system
+- [ ] _SUPER IMPORTANT_ Achievement system
+- [ ] _SUPER IMPORTANT_ Notifications system
 - [ ] Achievement sharing system
 
 ## Front-end
 
-- [ ] General layout
+- [x] General layout
 - [ ] Cool clicker effects
 - [ ] Stylish upgrade buttons
 - [ ] Display information about the current game state
