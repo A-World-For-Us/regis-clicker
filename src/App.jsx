@@ -1,6 +1,6 @@
 import toml from 'toml';
 import { useEffect, useReducer, useRef, useState } from 'react';
-import totoro from './totoro_noel.jpeg';
+import regis from './assets/regis.png';
 import totoroIcon from './totoro-icon.jpeg';
 import upgrades from './upgrades.toml?raw';
 
@@ -24,20 +24,22 @@ function App() {
   return (
     <>
       <main>
+        <div className='title'>Régis clicker</div>
         <p className="trainings">
           {prettyBigNumber(trainings)} Personnes formées
         </p>
         <p className="moneys">{prettyBigNumber(moneys)}$ disponible</p>
-        <button className="clicker-wrapper">
+        <div className="clicker-wrapper" onClick={() => dispatch({ type: 'click' })}>
           <img
             className="clicker"
-            src={totoro}
-            onClick={() => dispatch({ type: 'click' })}
+            src={regis}
           />
-          <p>Cliquer pour commencer à donner des formations !</p>
-        </button>
+        </div>
+        {trainings == 0 && <p>Cliquer pour commencer à donner des formations !</p>}
+
       </main>
       <aside>
+        <h1>Améliorations</h1>
         {Object.entries({
           collaborators: 'Collaborateurs',
           trainings: 'Formations',
@@ -60,11 +62,13 @@ function App() {
 import PropTypes from 'prop-types';
 
 const UpgradeCategory = ({ name, upgrades, moneys, dispatch }) => {
+  const [open, setOpen] = useState(true)
   return (
     <div>
-      <p className="upgrade-category">{name}</p>
+      <p className="upgrade-category" onClick={() => setOpen(!open)}><span className={`material-symbols-outlined ${open ? 'arrow-open' : 'arrow-close'}`}>arrow_drop_down</span>{name}</p>
       {upgrades.map(upgrade => (
-        <Upgrade
+         <Upgrade
+         open= {open}
           key={upgrade.name}
           name={upgrade.name}
           description={upgrade.description}
@@ -103,6 +107,7 @@ UpgradeCategory.propTypes = {
 };
 
 const Upgrade = ({
+  open,
   name,
   description,
   moneys,
@@ -123,7 +128,7 @@ const Upgrade = ({
     }
   };
 
-  return (
+  if (open) return (
     <div className="upgrade-capsule" onClick={buy} disabled={moneys < cost}>
       {moneys > cost && amount < max ? (
         <img className="upgrade-capsule__icon" src={totoroIcon} />
