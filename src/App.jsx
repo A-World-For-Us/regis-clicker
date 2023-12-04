@@ -3,6 +3,7 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import regis from './assets/regis.png';
 import totoroIcon from './totoro-icon.jpeg';
 import upgrades from './upgrades.toml?raw';
+import Achievements from './Achievements';
 
 const defaultState = {
   trainings: 0,
@@ -15,7 +16,11 @@ const defaultState = {
 const upgradesParsed = toml.parse(upgrades);
 
 function App() {
-  const [{ trainings, moneys }, dispatch] = useReducer(reducer, defaultState);
+  const [{ trainings, moneys, trainingsPerTick }, dispatch] = useReducer(
+    reducer,
+    defaultState,
+  );
+  const [isAnimated, setIsAnimated] = useState(false);
 
   useInterval(() => {
     dispatch({ type: 'tick' });
@@ -24,19 +29,30 @@ function App() {
   return (
     <>
       <main>
-        <div className='title'>Régis clicker</div>
+        <div className="title">Régis clicker</div>
         <p className="trainings">
-          {prettyBigNumber(trainings)} Personnes formées
+          {prettyBigNumber(trainings)}
+          {trainings > 1 ? ' personnes formées' : ' personne formée'}
         </p>
         <p className="moneys">{prettyBigNumber(moneys)}$ disponible</p>
-        <div className="clicker-wrapper" onClick={() => dispatch({ type: 'click' })}>
-          <img
-            className="clicker"
-            src={regis}
-          />
+        <div
+          className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
+          onClick={() => {
+            dispatch({ type: 'click' });
+            setIsAnimated(true);
+          }}
+          onAnimationEnd={() => setIsAnimated(false)}
+        >
+          <img className="clicker" src={regis} />
         </div>
-        {trainings == 0 && <p>Cliquer pour commencer à donner des formations !</p>}
-
+        {trainings == 0 && (
+          <p>Cliquer pour commencer à donner des formations !</p>
+        )}
+        <div className="has-grow"></div>
+        <Achievements
+          trainings={trainings}
+          trainingsPerTick={trainingsPerTick}
+        />
       </main>
       <aside>
         <h1>Améliorations</h1>
@@ -62,13 +78,22 @@ function App() {
 import PropTypes from 'prop-types';
 
 const UpgradeCategory = ({ name, upgrades, moneys, dispatch }) => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(true);
   return (
     <div>
-      <p className="upgrade-category" onClick={() => setOpen(!open)}><span className={`material-symbols-outlined ${open ? 'arrow-open' : 'arrow-close'}`}>arrow_drop_down</span>{name}</p>
+      <p className="upgrade-category" onClick={() => setOpen(!open)}>
+        <span
+          className={`material-symbols-outlined ${
+            open ? 'arrow-open' : 'arrow-close'
+          }`}
+        >
+          arrow_drop_down
+        </span>
+        {name}
+      </p>
       {upgrades.map(upgrade => (
-         <Upgrade
-         open= {open}
+        <Upgrade
+          open={open}
           key={upgrade.name}
           name={upgrade.name}
           description={upgrade.description}
@@ -128,28 +153,29 @@ const Upgrade = ({
     }
   };
 
-  if (open) return (
-    <div className="upgrade-capsule" onClick={buy} disabled={moneys < cost}>
-      {moneys > cost && amount < max ? (
-        <img className="upgrade-capsule__icon" src={totoroIcon} />
-      ) : (
-        <p className="upgrade-capsule__icon">🔒</p>
-      )}
+  if (open)
+    return (
+      <div className="upgrade-capsule" onClick={buy} disabled={moneys < cost}>
+        {moneys > cost && amount < max ? (
+          <img className="upgrade-capsule__icon" src={totoroIcon} />
+        ) : (
+          <p className="upgrade-capsule__icon">🔒</p>
+        )}
 
-      <div className="upgrade-capsule__body">
-        <p className="upgrade-capsule__name">{name}</p>
-        <p>{description}</p>
-        <div className="debug">
-          <p>Pour debug, ça fait quoi d'acheter ça :</p>
-          <p>{JSON.stringify(dispatchValue, null, 2)}</p>
+        <div className="upgrade-capsule__body">
+          <p className="upgrade-capsule__name">{name}</p>
+          <p>{description}</p>
+          <div className="debug">
+            <p>Pour debug, ça fait quoi d'acheter ça :</p>
+            <p>{JSON.stringify(dispatchValue, null, 2)}</p>
+          </div>
+        </div>
+        <div className="upgrade-capsule__amount">
+          <p>{amount >= max ? 'max' : 'x' + amount}</p>
+          <p>{amount < max && formatBigNumber(cost)}</p>
         </div>
       </div>
-      <div className="upgrade-capsule__amount">
-        <p>{amount >= max ? 'max' : 'x' + amount}</p>
-        <p>{amount < max && formatBigNumber(cost)}</p>
-      </div>
-    </div>
-  );
+    );
 };
 
 Upgrade.propTypes = {
