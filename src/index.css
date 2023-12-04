@@ -6,6 +6,7 @@ body {
   --color-dark-green: #5F6F52;
   --color-white: #F4F4F4;
   --color-beige: #FCF5ED;
+  --color-brown: #352e24;
 }
 
 #root {
@@ -72,6 +73,7 @@ aside h1{
 }
 
 .clicker-wrapper {
+  user-select: none;
   border: 5px solid var(--color-red);
   border-radius: 99999px;
   height: 400px;
@@ -81,6 +83,12 @@ aside h1{
   overflow: hidden;
   background-color: #A4B787;
   animation: pulse 2s infinite;
+
+
+}
+
+.train-animation{
+  animation: pulse 0.5s;
 }
 
 .clicker {
@@ -101,7 +109,6 @@ aside h1{
     text-shadow: var(--color-dark-green) 0.2rem 0.3rem;
   }
 }
-
 
 .upgrade-capsule {
   margin: 1rem;
@@ -161,6 +168,44 @@ aside h1{
 .arrow-close {
   transform: rotate(0deg);
   transition:cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.5s;
+}
+
+.achievement{
+  background-color: var(--color-green);
+  border: 2px solid var(--color-dark-green);
+  padding: 1rem;
+  color: var(--color-brown);
+  display: flex;
+  flex-direction: row;
+  font-size: 1rem;
+  margin: 1rem;
+  width: 500px;
+} 
+
+.achievement--emoji{
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.achievement--content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.achievement--close{
+  cursor: pointer;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.has-grow{
+  flex-grow: 1;
 }
 
 @keyframes pulse {
