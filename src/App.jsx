@@ -111,7 +111,6 @@ const UpgradeCategory = ({
   current,
 }) => {
   const [open, setOpen] = useState(true);
-  console.log(current);
   let buyableUpgrades = upgrades.filter(
     upgrade =>
       !current.includes(upgrade.name) &&
@@ -153,7 +152,6 @@ const UpgradeCategory = ({
 const Upgrade = ({ open, name, description, moneys, price, dispatch }) => {
   const buy = () => {
     if (moneys > price) {
-      console.log('coucou ?');
       dispatch({ type: 'buy', name: name });
     }
   };
