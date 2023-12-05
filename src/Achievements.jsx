@@ -6,7 +6,7 @@ import Achievement from './Achievement';
 const achievementsParsed = toml.parse(achievements);
 
 function Achievements(props) {
-  const [achievementsShown, setachievementsShown] = useState([]);
+  const [achievementsShown, setachievementsShown] = useState();
   const prevTrainingsRef = useRef(0);
   const prevTrainingsPerTickRef = useRef(0);
 
@@ -23,7 +23,7 @@ function Achievements(props) {
 
     achievementsParsed.achievements.forEach(a => {
       if (isAchievementJustUnlocked(a)) {
-        setachievementsShown([...achievementsShown, a]);
+        setachievementsShown(a);
       }
     });
 
@@ -33,21 +33,17 @@ function Achievements(props) {
 
   return (
     <>
-      {achievementsShown.map(a => {
-        return (
-          <Achievement
-            key={a.id}
-            id={a.id}
-            name={a.name}
-            description={a.description}
-            removeAchievement={() => {
-              setachievementsShown(
-                achievementsShown.filter(e => e.id !== a.id),
-              );
-            }}
-          />
-        );
-      })}
+      {achievementsShown && (
+        <Achievement
+          key={achievementsShown.id}
+          id={achievementsShown.id}
+          name={achievementsShown.name}
+          description={achievementsShown.description}
+          removeAchievement={() => {
+            setachievementsShown(null);
+          }}
+        />
+      )}
     </>
   );
 }
