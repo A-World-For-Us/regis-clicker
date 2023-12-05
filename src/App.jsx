@@ -5,21 +5,32 @@ import totoroIcon from './totoro-icon.jpeg';
 import upgrades from './upgrades.toml?raw';
 import Achievements from './Achievements';
 
+const upgradesParsed = toml.parse(upgrades);
+
+const STARTING_PRICE = 10;
+const PRICE_INCREASE_RATE = 2;
+const PROD_INCREASE_FLAT = 1;
+const PRICE_PER_TRAINING = 1;
+const MONEY_PER_TRAINING_INCREASE_RATE = 2;
 const defaultState = {
   trainings: 0,
   moneys: 0,
   trainingsPerTick: 0,
-  trainingMultiplier: 1,
-  moneysPerTraining: 1,
+  moneysPerTraining: PRICE_PER_TRAINING,
+  price: STARTING_PRICE,
+  upgrades: [],
 };
 
-const upgradesParsed = toml.parse(upgrades);
+const nextPrice = previousPrice => previousPrice * PRICE_INCREASE_RATE;
+const nextTrainingsPerTick = (previousTrainingsPerTick, level) =>
+  previousTrainingsPerTick + level * PROD_INCREASE_FLAT;
+const nextMoneysPerTraining = (previousMoneyPerTraining, level) =>
+  previousMoneyPerTraining +
+  Math.floor(level / 10) * MONEY_PER_TRAINING_INCREASE_RATE;
 
 function App() {
-  const [{ trainings, moneys, trainingsPerTick }, dispatch] = useReducer(
-    reducer,
-    defaultState,
-  );
+  const [{ trainings, moneys, trainingsPerTick, price, upgrades }, dispatch] =
+    useReducer(reducer, defaultState);
   const [isAnimated, setIsAnimated] = useState(false);
 
   useInterval(() => {
@@ -55,30 +66,63 @@ function App() {
         />
       </main>
       <aside>
-        <h1>Améliorations</h1>
-        {Object.entries({
-          collaborators: 'Collaborateurs',
-          trainings: 'Formations',
-          certifications: 'Certifications',
-          features: 'Fonctionnalités',
-          modality: 'Modalités',
-        }).map(([key, name]) => (
-          <UpgradeCategory
-            key={key}
-            name={name}
-            upgrades={upgradesParsed[key]}
-            moneys={moneys}
-            dispatch={dispatch}
-          />
-        ))}
+        <Upgrades
+          current={upgrades}
+          all={upgradesParsed}
+          moneys={moneys}
+          dispatch={dispatch}
+          price={price}
+        />
       </aside>
     </>
   );
 }
-import PropTypes from 'prop-types';
 
-const UpgradeCategory = ({ name, upgrades, moneys, dispatch }) => {
+const Upgrades = ({ current, all, moneys, dispatch, price }) => {
+  const categories = Object.entries(all).map(nameAndUpgrade => {
+    const [name, upgrades] = nameAndUpgrade;
+    return (
+      <UpgradeCategory
+        key={name}
+        name={name}
+        upgrades={upgrades}
+        current={current}
+        moneys={moneys}
+        dispatch={dispatch}
+        price={price}
+      />
+    );
+  });
+
+  return (
+    <>
+      <h1>Améliorations</h1>
+      {categories}
+    </>
+  );
+};
+
+const UpgradeCategory = ({
+  name,
+  moneys,
+  price,
+  dispatch,
+  upgrades,
+  current,
+}) => {
   const [open, setOpen] = useState(true);
+  console.log(current);
+  let buyableUpgrades = upgrades.filter(
+    upgrade =>
+      !current.includes(upgrade.name) &&
+      (!upgrade.requirement ||
+        upgrade.requirement.some(req => current.includes(req))),
+  );
+
+  if (buyableUpgrades.length == 0) {
+    return null;
+  }
+
   return (
     <div>
       <p className="upgrade-category" onClick={() => setOpen(!open)}>
@@ -91,72 +135,33 @@ const UpgradeCategory = ({ name, upgrades, moneys, dispatch }) => {
         </span>
         {name}
       </p>
-      {upgrades.map(upgrade => (
+      {buyableUpgrades.map(upgrade => (
         <Upgrade
           open={open}
           key={upgrade.name}
           name={upgrade.name}
           description={upgrade.description}
-          baseCost={upgrade.cost}
-          costIncreaseRate={upgrade.costIncreaseRate || 1.1}
           moneys={moneys}
+          price={price}
           dispatch={dispatch}
-          max={upgrade.max || Infinity}
-          dispatchValue={{
-            trainingsPerTick: upgrade.trainingsPerTick || 0,
-            trainingMultiplier: upgrade.trainingMultiplier || 1,
-            moneysPerTraining: upgrade.moneysPerTraining || 0,
-          }}
         />
       ))}
     </div>
   );
 };
 
-UpgradeCategory.propTypes = {
-  name: PropTypes.string.isRequired,
-  upgrades: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      cost: PropTypes.number.isRequired,
-      costIncreaseRate: PropTypes.number,
-      trainingsPerTick: PropTypes.number,
-      trainingMultiplier: PropTypes.number,
-      moneysPerTraining: PropTypes.number,
-    }),
-  ).isRequired,
-  moneys: PropTypes.number.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  max: PropTypes.number.isRequired,
-};
-
-const Upgrade = ({
-  open,
-  name,
-  description,
-  moneys,
-  baseCost,
-  costIncreaseRate,
-  dispatch,
-  dispatchValue,
-  max,
-}) => {
-  const [cost, setCost] = useState(baseCost);
-  const [amount, setAmount] = useState(0);
-
+const Upgrade = ({ open, name, description, moneys, price, dispatch }) => {
   const buy = () => {
-    if (moneys > cost && amount < max) {
-      dispatch({ ...dispatchValue, type: 'buy', cost: cost });
-      setCost(it => it * costIncreaseRate);
-      setAmount(it => it + 1);
+    if (moneys > price) {
+      console.log('coucou ?');
+      dispatch({ type: 'buy', name: name });
     }
   };
 
   if (open)
     return (
-      <div className="upgrade-capsule" onClick={buy} disabled={moneys < cost}>
-        {moneys > cost && amount < max ? (
+      <div className="upgrade-capsule" onClick={buy} disabled={moneys < price}>
+        {moneys > price ? (
           <img className="upgrade-capsule__icon" src={totoroIcon} />
         ) : (
           <p className="upgrade-capsule__icon">🔒</p>
@@ -165,72 +170,45 @@ const Upgrade = ({
         <div className="upgrade-capsule__body">
           <p className="upgrade-capsule__name">{name}</p>
           <p>{description}</p>
-          <div className="debug">
-            <p>Pour debug, ça fait quoi d'acheter ça :</p>
-            <p>{JSON.stringify(dispatchValue, null, 2)}</p>
-          </div>
         </div>
         <div className="upgrade-capsule__amount">
-          <p>{amount >= max ? 'max' : 'x' + amount}</p>
-          <p>{amount < max && formatBigNumber(cost)}</p>
+          <p>{formatBigNumber(price)}</p>
         </div>
       </div>
     );
 };
 
-Upgrade.propTypes = {
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  moneys: PropTypes.number.isRequired,
-  baseCost: PropTypes.number.isRequired,
-  costIncreaseRate: PropTypes.number.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  max: PropTypes.number.isRequired,
-  dispatchValue: PropTypes.shape({
-    trainingsPerTick: PropTypes.number,
-    trainingMultiplier: PropTypes.number,
-    moneysPerTraining: PropTypes.number,
-  }).isRequired,
-};
-
-const reducer = (
-  state,
-  {
-    type,
-    cost = 0,
-    trainingsPerTick = 0,
-    trainingMultiplier = 1,
-    moneysPerTraining = 0,
-  },
-) => {
+const reducer = (state, { type, name }) => {
   switch (type) {
     case 'tick': {
       return {
         ...state,
-        trainings:
-          state.trainings + state.trainingsPerTick * state.trainingMultiplier,
-        moneys:
-          state.moneys +
-          state.trainingsPerTick *
-            state.trainingMultiplier *
-            state.moneysPerTraining,
+        trainings: state.trainings + state.trainingsPerTick,
+        moneys: state.moneys + state.trainingsPerTick * state.moneysPerTraining,
       };
     }
     case 'click': {
       return {
         ...state,
-        trainings: state.trainings + state.trainingMultiplier,
+        trainings: state.trainings + 1 + state.trainingsPerTick,
         moneys:
-          state.moneys + state.trainingMultiplier * state.moneysPerTraining,
+          state.moneys + (1 + state.trainingsPerTick) * state.moneysPerTraining,
       };
     }
     case 'buy': {
       return {
         ...state,
-        moneys: state.moneys - cost,
-        trainingsPerTick: state.trainingsPerTick + trainingsPerTick,
-        trainingMultiplier: state.trainingMultiplier * trainingMultiplier,
-        moneysPerTraining: state.moneysPerTraining + moneysPerTraining,
+        upgrades: state.upgrades.concat(name),
+        trainingsPerTick: nextTrainingsPerTick(
+          state.trainingsPerTick,
+          state.upgrades.length + 1,
+        ),
+        moneysPerTraining: nextMoneysPerTraining(
+          state.moneysPerTraining,
+          state.upgrades.length + 1,
+        ),
+        moneys: state.moneys - state.price,
+        price: nextPrice(state.price),
       };
     }
   }

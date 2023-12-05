@@ -1,124 +1,148 @@
-[[features]]
-name = "Signature Électonique"
-description = "Pour les OPCO un peu trop tatillons."
-cost = 15_000
-trainingsPerTick = 50
-max = 10
-
-[[features]]
-name = "Multi-Centres"
-description = "Avec un tiret et un S s'il vous plaît."
-cost = 50_000
-trainingsPerTick = 10
-trainingMultiplier = 1.25
-max = 10
-
-[[features]]
-name = "Certification Numérique"
-description = "C'est comme un diplôme mais on a pas le droit de les appeler comme ça."
-cost = 25_000
-moneysPerTraining = 5
-max = 10
-
-[[collaborators]]
+[[Collaborateurs]]
 name = "Régis"
-description = "Il est sympa mais il a un peu de mal avec les ordinateurs."
-cost = 10
-trainingsPerTick = 1
-max = 1
+description = "Il est sympa mais un peu désorganisé."
 
-[[collaborators]]
+[[Collaborateurs]]
 name = "Pétronille"
 description = "Les jeunes avec leur TokTok savent utiliser les ordinateurs."
-cost = 100_000
-trainingMultiplier = 2
-max = 1
+requirement = ["Digiforma"]
 
-[[collaborators]]
+[[Collaborateurs]]
 name = "Kat Jépété"
 description = "L'intelligence artificielle c'est son dada."
-cost = 100_000_000
-trainingMultiplier = 10
-max = 1
+requirement = ["Multi-Centres"]
 
-[[modality]]
+[["Écosystème"]]
+name = "Formalerte"
+description = "Votre outils de veille du quotidien"
+requirement = ["Digiforma"]
+
+[["Écosystème"]]
+name = "Digiformag"
+description = "LE journal de la formation pro en France"
+requirement = ["Régis"]
+
+[["Écosystème"]]
+name = "Digiformag 2"
+description = "Gratuit et de qualité pour tous les OF de France"
+requirement = ["Digiformag"]
+
+[["Écosystème"]]
+name = "Digiformag 3"
+description = "Des articles de fond pour les professionnels de la formation"
+requirement = ["Digiformag 2"]
+
+[["Écosystème"]]
+name = "Digiformag 4"
+description = "Dans leur plus belles formes, merci aux illustratrices et aux illustrateurs"
+requirement = ["Digiformag 3"]
+
+[["Écosystème"]]
+name = "Digiformag 5"
+description = "On en est fiers, et on espère que vous aussi"
+requirement = ["Digiformag 5"]
+
+[["Écosystème"]]
+name = "OF Connect"
+description = "Comme un groupe whatsapp entre amis, mais pour le monde de la formation"
+requirement = ["Formalerte"]
+
+[["Écosystème"]]
+name = "OC Connect"
+description = "C'est quoi déjà exactement un certificateur ?"
+requirement = ["Référencement RS"]
+
+[[Outils]]
+name = "Excel"
+description = "Je suis expert, j'ai eu un cours d'excel au lycée"
+requirement = ["Régis"]
+
+[[Outils]]
+name = "Digiforma"
+description = "Est-ce qu'il faut encore le présenter ?"
+requirement = ["Excel"]
+
+[["Modalités"]]
 name = "Salle de classe"
-description = "C'est comme une salle de réunion mais avec des tables."
-cost = 1_000_000
-trainingMultiplier = 1.1
-max = 1
+description = "C'est comme une salle de réunion mais avec des tables"
+requirement= ["Régis"]
 
-[[modality]]
+[["Modalités"]]
 name = "Amphithéâtre"
-description = "C'est comme une salle de classe mais avec des gradins."
-cost = 50_000_000
-trainingMultiplier = 1.5
-max = 1
+description = "Au fond, réveillez-vous s'il vous plaît"
+requirement = ["Salle de classe"]
 
-[[modality]]
+[["Modalités"]]
 name = "MOOC"
-description = "Pour toucher plein de monde sans se fatiguer."
-cost = 150_000_000
-trainingMultiplier = 2
-moneysPerTraining = 100
-max = 1
+description = "Règle numéro 1 : tout le monde doit montrer son chien à la caméra, c'est la pet tax"
+requirement = ["Visio", "OF Connect"]
 
-[[modality]]
+[["Modalités"]]
 name = "Réalité Virtuelle"
-description = "On a l'air bizarre mais on apprend bien."
-cost = 10_500_000_000
-trainingMultiplier = 2
-moneysPerTraining = 1000
-max = 1
+description = "On a l'air bizarre mais on apprend bien"
+requirement = ["MOOC", "Signature Électronique", "Digiformag"]
 
-[[certifications]]
+[["Fonctionnalités"]]
+name = "Paiement en ligne"
+description = "Rapide, fiable et sécurisé"
+requirement = ["Digiforma"]
+
+[["Fonctionnalités"]]
+name = "Signature Électronique"
+description = "Pour les OPCO un peu trop tatillons"
+requirement = ["Digiforma"]
+
+[["Fonctionnalités"]]
+name = "Visio"
+description = "Et tout le monde met sa caméra s'il vous plaît"
+requirement = ["Digiforma"]
+
+[["Fonctionnalités"]]
+name = "Multi-Centres"
+description = "Avec un tiret et un S s'il vous plaît"
+requirement = ["Digiforma"]
+
+[["Fonctionnalités"]]
+name = "Certification Numérique"
+description = "C'est comme un diplôme mais on a pas le droit de les appeler comme ça"
+requirement = ["Digiforma"]
+
+[["Fonctionnalités"]]
+name = "Marketplace"
+description = "Rien de mieux que de faire ses courses sur Digiforma"
+requirement = ["Digiforma"]
+
+[[Certifications]]
 name = "Qualiopi"
-description = "Avec Digiforma c'est facile."
-cost = 1000
-trainingsPerTick = 10
-max = 1
+description = "Avec Digiforma c'est facile, mais on oublie pas sa veille"
+requirement = ["Digiforma", "Formalerte"]
 
-[[certifications]]
+[[Certifications]]
 name = "Audit de surveillance"
 description = "Il faut pas se laisser aller"
-cost = 1500
-trainingsPerTick = 10
-moneysPerTraining = 1
-max = 10
+requirement = ["Qualiopi"]
 
-[[certifications]]
-name = "Kliopi"
-description = "Ils savent vraiment plus quoi inventer au gouvernement."
-cost = 3_000
-trainingsPerTick = 25
-moneysPerTraining = 2
-max = 100
+[[Certifications]]
+name = "Audit de surveillance 2"
+description = "Encore ? Mais on vient juste de passer le premier !"
+requirement = ["Audit de surveillance"]
 
-[[trainings]]
-name = "Initiation au Numérique"
-description = "Pour que Régis ne fasse plus planter l'ordinateur."
-cost = 25
-trainingsPerTick = 1
-max = 1
+[[Certifications]]
+name = "Référencement RS"
+description = "Claire a l'aide, je sais pas ce que c'est"
+requirement = ["Audit de surveillance 2"]
 
-[[trainings]]
-name = "Sécurité Informatique pour Régis"
-description = "Apprendre à Régis à ne pas cliquer sur tous les liens."
-cost = 50
-moneysPerTraining = 1
-max = 1
+[["Récompenses"]]
+name = "Médaille en bronze"
+description = "Ne la mangez pas, c'est pour la déco"
+requirement = ["OC Connect", "Réalité Virtuelle"]
 
-[[trainings]]
-name = "Développement Web pour Régis"
-description = "Pour que Régis puisse mettre à jour le site web tout seul."
-cost = 100
-trainingsPerTick = 5
-max = 1
+[["Récompenses"]]
+name = "Médaille en argent"
+description = "Plus qu'un pas"
+requirement = ["Médaille en bronze"]
 
-[[trainings]]
-name = "Gestion de Projet Numérique pour Régis"
-description = "Régis va apprendre à utiliser les outils de gestion de projet."
-cost = 250
-trainingsPerTick = 5
-moneysPerTraining = 1
-max = 1
+[["Récompenses"]]
+name = "Trophée de la formation"
+description = "Un trophée pour les gouverner tous et dans les ténèbres les former"
+requirement = ["Médaille en argent"]
