@@ -12,16 +12,15 @@ body {
 .app {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
   background-color: var(--color-beige);
 }
 
 main {
   flex-grow: 1;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 }
 
 aside {
@@ -55,6 +54,7 @@ aside h1 {
 
 .title {
   font-family: 'Pacifico', sans-serif;
+  padding: 1rem;
   display: flex;
   align-items: center;
   width: 100%;
@@ -64,6 +64,7 @@ aside h1 {
 }
 
 .trainings {
+  padding: 0 1rem;
   font-family: 'Pacifico', sans-serif;
   font-size: 3rem;
   line-height: 3rem;
@@ -74,6 +75,7 @@ aside h1 {
 }
 
 .moneys {
+  padding: 0 1rem;
   font-size: 2rem;
   color: var(--color-dark-green);
   width: 100%;
@@ -226,13 +228,13 @@ aside h1 {
   text-align: center;
   cursor: pointer;
   transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
-  
-&:hover{
-  transform: scale(1.2);
-}
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 
-.achievementsList{
+.achievementsList {
   z-index: 1;
   width: 60vh;
   height: 75vh;
@@ -251,14 +253,13 @@ aside h1 {
 .achievementsList::-webkit-scrollbar {
   width: 8px;
   background-color: var(--color-green);
-
 }
 .achievementsList::-webkit-scrollbar-thumb {
   background-color: var(--color-dark-green);
   border-radius: 9999px;
 }
 
-.achievementsList h1{
+.achievementsList h1 {
   width: 100%;
   text-align: center;
   font-family: 'Pacifico', sans-serif;
@@ -267,10 +268,9 @@ aside h1 {
   font-size: 2.5rem;
   font-weight: 100;
   margin-bottom: 1rem;
-
 }
 
-.achievementsList p{
+.achievementsList p {
   width: 100%;
   text-align: center;
   color: var(--color-beige);
@@ -295,5 +295,32 @@ aside h1 {
   100% {
     transform: scale(0.95);
     box-shadow: 0 0 0 0 rgba(170, 58, 58, 0);
+  }
+}
+
+.news-ticker {
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: var(--color-red);
+  color: var(--color-beige);
+  text-shadow: var(--color-dark-green) 0.1rem 0.1rem;
+  padding: 10px;
+  width: 100%;
+}
+
+.ticker-text {
+  display: inline-block;
+  position: relative;
+  left: 100%;
+  animation: slide-left 20s linear infinite;
+}
+
+/* Keyframes pour l'animation de défilement du texte */
+@keyframes slide-left {
+  from {
+    left: 100%; /* Départ à droite */
+  }
+  to {
+    left: -100%; /* Fin à gauche, ce qui dépend de la longueur du texte */
   }
 }
