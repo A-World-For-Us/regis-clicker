@@ -1,5 +1,5 @@
-import toml from 'toml';
 import { useEffect, useReducer, useRef, useState } from 'react';
+import toml from 'toml';
 import regis from './assets/regis.png';
 import totoroIcon from './totoro-icon.jpeg';
 import upgrades from './upgrades.toml?raw';
@@ -30,7 +30,7 @@ const nextMoneysPerTraining = (previousMoneyPerTraining, level) =>
   previousMoneyPerTraining +
   Math.floor(level / 10) * MONEY_PER_TRAINING_INCREASE_RATE;
 
-function App() {
+function App({ setScore }) {
   const [{ trainings, moneys, trainingsPerTick, price, upgrades }, dispatch] =
     useReducer(reducer, defaultState);
   const [isAnimated, setIsAnimated] = useState(false);
@@ -40,9 +40,13 @@ function App() {
     dispatch({ type: 'tick' });
   }, 1000);
 
+  useInterval(() => {
+    console.log('push score');
+    setScore(trainings);
+  }, 10_000);
+
   return (
     <div
-      className="app"
       onClick={e => {
         if (e.target.closest('.achievementsList')) {
           return;
@@ -56,50 +60,52 @@ function App() {
       }}
     >
       <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
-      <main>
-        <div className="title">Régis clicker</div>
-        <p className="trainings">
-          {prettyBigNumber(trainings)}
-          {trainings > 1 ? ' personnes formées' : ' personne formée'}
-        </p>
-        <p className="moneys">{prettyBigNumber(moneys)}$ disponible</p>
-        <div
-          className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
-          onClick={() => {
-            dispatch({ type: 'click' });
-            setIsAnimated(true);
-          }}
-          onAnimationEnd={() => setIsAnimated(false)}
-        >
-          <img draggable={false} className="clicker" src={regis} />
-        </div>
-        {trainings == 0 && (
-          <p>Cliquer pour commencer à donner des formations !</p>
-        )}
-        <div className="has-grow"></div>
-        <Achievements
-          trainings={trainings}
-          trainingsPerTick={trainingsPerTick}
-        />
-        {openTrophies && (
-          <AchievementsList
+      <div className="app">
+        <main>
+          <div className="title">Régis clicker</div>
+          <p className="trainings">
+            {prettyBigNumber(trainings)}
+            {trainings > 1 ? ' personnes formées' : ' personne formée'}
+          </p>
+          <p className="moneys">{prettyBigNumber(moneys)}$ disponible</p>
+          <div
+            className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
+            onClick={() => {
+              dispatch({ type: 'click' });
+              setIsAnimated(true);
+            }}
+            onAnimationEnd={() => setIsAnimated(false)}
+          >
+            <img draggable={false} className="clicker" src={regis} />
+          </div>
+          {trainings == 0 && (
+            <p>Cliquer pour commencer à donner des formations !</p>
+          )}
+          <div className="has-grow"></div>
+          <Achievements
             trainings={trainings}
             trainingsPerTick={trainingsPerTick}
           />
-        )}
-        <p className="trophy" onClick={() => setOpenTrophies(true)}>
-          🏆
-        </p>
-      </main>
-      <aside>
-        <Upgrades
-          current={upgrades}
-          all={upgradesParsed}
-          moneys={moneys}
-          dispatch={dispatch}
-          price={price}
-        />
-      </aside>
+          {openTrophies && (
+            <AchievementsList
+              trainings={trainings}
+              trainingsPerTick={trainingsPerTick}
+            />
+          )}
+          <p className="trophy" onClick={() => setOpenTrophies(true)}>
+            🏆
+          </p>
+        </main>
+        <aside>
+          <Upgrades
+            current={upgrades}
+            all={upgradesParsed}
+            moneys={moneys}
+            dispatch={dispatch}
+            price={price}
+          />
+        </aside>
+      </div>
     </div>
   );
 }
