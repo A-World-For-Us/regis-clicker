@@ -21,16 +21,16 @@ trainingsPerTick = 0
 
 [[achievements]]
 id = 4
-name = "200 personnes formées"
-description = "Hey mais c'est que vous n'êtes plus un si petit formateur !"
-trainings = 200
+name = "100 personnes formées"
+description = "CENT PATATES ? Ah non, cent apprenants"
+trainings = 100
 trainingsPerTick = 0
 
 [[achievements]]
 id = 5
-name = "100 personnes formées"
-description = "CENT PATATES ? Ah non, cent apprenants"
-trainings = 100
+name = "200 personnes formées"
+description = "Hey mais c'est que vous n'êtes plus un si petit formateur !"
+trainings = 200
 trainingsPerTick = 0
 
 [[achievements]]
@@ -42,44 +42,44 @@ trainingsPerTick = 0
 
 [[achievements]]
 id = 7
-name = "777 personnes formées"
-description = "Chiffre porte bonheur faites un vœu !"
-trainings = 777
-trainingsPerTick = 0
-
-[[achievements]]
-id = 8
-name = "14071993 personnes formées"
-description = "Autant d'apprenants que la date d'anniversaire de Jade, bravo !"
-trainings = 14071993
-trainingsPerTick = 0
-
-[[achievements]]
-id = 9
 name = "500 personnes formées"
 description = "Bienvenue sur l'abonnement Orga !"
 trainings = 500
 trainingsPerTick = 0
 
 [[achievements]]
-id = 10
+id = 8
+name = "777 personnes formées"
+description = "Chiffre porte bonheur faites un vœu !"
+trainings = 777
+trainingsPerTick = 0
+
+[[achievements]]
+id = 9
 name = "1500 personnes formées"
 description = "Vous avez toujours rêvé d'avoir un KAM sur Digiforma ?"
 trainings = 1500
 trainingsPerTick = 0
 
 [[achievements]]
-id = 11
+id = 10
 name = "80 000 personnes formées"
 description = "On pourrait remplir le stade de France avec vos apprenants, bravo !"
 trainings = 80000
 trainingsPerTick = 0
 
 [[achievements]]
-id = 12
+id = 11
 name = "522 228 personnes formées"
 description = "Félicitations, vous avez formé toute la ville de Lyon !"
 trainings = 522228
+trainingsPerTick = 0
+
+[[achievements]]
+id = 12
+name = "14 07 1993 personnes formées"
+description = "Autant d'apprenants que la date d'anniversaire de Jade, bravo !"
+trainings = 14071993
 trainingsPerTick = 0
 
 [[achievements]]

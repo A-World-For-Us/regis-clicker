@@ -4,6 +4,8 @@ import regis from './assets/regis.png';
 import totoroIcon from './totoro-icon.jpeg';
 import upgrades from './upgrades.toml?raw';
 import Achievements from './Achievements';
+import AchievementsList from './AchievementsList';
+import Snowfall from 'react-snowfall';
 
 const upgradesParsed = toml.parse(upgrades);
 
@@ -32,13 +34,28 @@ function App() {
   const [{ trainings, moneys, trainingsPerTick, price, upgrades }, dispatch] =
     useReducer(reducer, defaultState);
   const [isAnimated, setIsAnimated] = useState(false);
+  const [openTrophies, setOpenTrophies] = useState(false);
 
   useInterval(() => {
     dispatch({ type: 'tick' });
   }, 1000);
 
   return (
-    <>
+    <div
+      className="app"
+      onClick={e => {
+        if (e.target.closest('.achievementsList')) {
+          return;
+        } else {
+          if (openTrophies) {
+            setOpenTrophies(false);
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }
+      }}
+    >
+      <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
       <main>
         <div className="title">Régis clicker</div>
         <p className="trainings">
@@ -54,7 +71,7 @@ function App() {
           }}
           onAnimationEnd={() => setIsAnimated(false)}
         >
-          <img className="clicker" src={regis} />
+          <img draggable={false} className="clicker" src={regis} />
         </div>
         {trainings == 0 && (
           <p>Cliquer pour commencer à donner des formations !</p>
@@ -64,6 +81,15 @@ function App() {
           trainings={trainings}
           trainingsPerTick={trainingsPerTick}
         />
+        {openTrophies && (
+          <AchievementsList
+            trainings={trainings}
+            trainingsPerTick={trainingsPerTick}
+          />
+        )}
+        <p className="trophy" onClick={() => setOpenTrophies(true)}>
+          🏆
+        </p>
       </main>
       <aside>
         <Upgrades
@@ -74,7 +100,7 @@ function App() {
           price={price}
         />
       </aside>
-    </>
+    </div>
   );
 }
 
