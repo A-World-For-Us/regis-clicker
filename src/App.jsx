@@ -1,6 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import toml from 'toml';
-import regis from './assets/regis.png';
 import totoroIcon from './totoro-icon.jpeg';
 import upgrades from './upgrades.toml?raw';
 import Achievements from './Achievements';
@@ -12,6 +11,7 @@ const upgradesParsed = toml.parse(upgrades);
 const STARTING_PRICE = 10;
 const PRICE_INCREASE_RATE = 2;
 const PROD_INCREASE_FLAT = 1;
+const PROD_INCREASE_RATE = 1.5;
 const PRICE_PER_TRAINING = 1;
 const MONEY_PER_TRAINING_INCREASE_RATE = 2;
 const KEY = 'regis-clicker-save';
@@ -30,7 +30,9 @@ if (savedState) {
 
 const nextPrice = previousPrice => previousPrice * PRICE_INCREASE_RATE;
 const nextTrainingsPerTick = (previousTrainingsPerTick, level) =>
-  previousTrainingsPerTick + level * PROD_INCREASE_FLAT;
+  previousTrainingsPerTick +
+  (level * PROD_INCREASE_FLAT) / 2 +
+  (level > 10 ? (level - 10) * PROD_INCREASE_RATE : 0);
 const nextMoneysPerTraining = (previousMoneyPerTraining, level) =>
   previousMoneyPerTraining +
   Math.floor(level / 10) * MONEY_PER_TRAINING_INCREASE_RATE;
@@ -81,7 +83,11 @@ function App({ setScore }) {
             }}
             onAnimationEnd={() => setIsAnimated(false)}
           >
-            <img draggable={false} className="clicker" src={regis} />
+            <img
+              draggable={false}
+              className="clicker"
+              src={imageName(upgrades)}
+            />
           </div>
           {trainings == 0 && (
             <p className="clicker-tips">
@@ -167,7 +173,7 @@ const UpgradeCategory = ({
     upgrade =>
       !current.includes(upgrade.name) &&
       (!upgrade.requirement ||
-        upgrade.requirement.some(req => current.includes(req))),
+        upgrade.requirement.every(req => current.includes(req))),
   );
 
   if (buyableUpgrades.length == 0) {
@@ -330,6 +336,22 @@ function useInterval(callback, delay) {
 
 function saveState(state) {
   localStorage.setItem(KEY, JSON.stringify(state));
+}
+
+function imageName(upgrades) {
+  if (upgrades.includes('Trophée de la formation')) {
+    return '6.png';
+  } else if (upgrades.includes('Réalité Virtuelle')) {
+    return '5.png';
+  } else if (upgrades.includes('Kat Jépété')) {
+    return '4.png';
+  } else if (upgrades.includes('Audit de surveillance')) {
+    return '3.png';
+  } else if (upgrades.includes('Pétronille')) {
+    return '2.png';
+  } else {
+    return '1.png';
+  }
 }
 
 export default App;
