@@ -7,6 +7,7 @@ import Achievements from './Achievements';
 import AchievementsList from './AchievementsList';
 import WinScreen from './WinScreen';
 import Snowfall from 'react-snowfall';
+import Ornament from './Ornament';
 
 const upgradesParsed = toml.parse(upgrades);
 const achievementsParsed = toml.parse(achievements);
@@ -87,6 +88,10 @@ function App({ setScore }) {
         }
       }}
     >
+      {upgrades.map(upgrade => {
+        return <Ornament upgrade={upgrade} />;
+      })}
+
       <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
       <div className="app">
         <main>
