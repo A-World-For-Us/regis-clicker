@@ -1,6 +1,7 @@
 [[Collaborateurs]]
 name = "Régis"
 description = "Il est sympa mais un peu désorganisé."
+buyableTips = ["Bien joué ! Vous avez assez d'argent pour débloquer Régis, cliquez dessus !"]
 
 [[Collaborateurs]]
 name = "Pétronille"
@@ -66,6 +67,7 @@ requirement = ["Excel"]
 name = "Salle de classe"
 description = "C'est comme une salle de réunion mais avec des tables"
 requirement= ["Régis"]
+tips = ["Vous pouvez de nouveau débloquer des améliorations. Continuez de cliquer pour débloquer la Galaxy Digiforma et devenir le plus gros des OF !"]
 
 [["Modalités"]]
 name = "Amphithéâtre"
