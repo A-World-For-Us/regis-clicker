@@ -14,11 +14,13 @@ const PROD_INCREASE_FLAT = 1;
 const PROD_INCREASE_RATE = 1.5;
 const PRICE_PER_TRAINING = 1;
 const MONEY_PER_TRAINING_INCREASE_RATE = 2;
+const TICKS_PER_SECONDS = 100;
+
 const KEY = 'regis-clicker-save';
 let defaultState = {
   trainings: 0,
   moneys: 0,
-  trainingsPerTick: 0,
+  trainingsPerSecond: 0,
   moneysPerTraining: PRICE_PER_TRAINING,
   price: STARTING_PRICE,
   upgrades: [],
@@ -26,11 +28,15 @@ let defaultState = {
 let savedState = localStorage.getItem(KEY);
 if (savedState) {
   defaultState = JSON.parse(localStorage.getItem(KEY));
+  if (defaultState.trainingsPerTick) {
+    defaultState.trainingsPerSecond = defaultState.trainingsPerTick;
+    delete defaultState.trainingsPerTick;
+  }
 }
 
 const nextPrice = previousPrice => previousPrice * PRICE_INCREASE_RATE;
-const nextTrainingsPerTick = (previousTrainingsPerTick, level) =>
-  previousTrainingsPerTick +
+const nextTrainingsPerSecond = (previousTrainingsPerSecond, level) =>
+  previousTrainingsPerSecond +
   (level * PROD_INCREASE_FLAT) / 2 +
   (level > 10 ? (level - 10) * PROD_INCREASE_RATE : 0);
 const nextMoneysPerTraining = (previousMoneyPerTraining, level) =>
@@ -39,13 +45,13 @@ const nextMoneysPerTraining = (previousMoneyPerTraining, level) =>
 
 function App({ setScore }) {
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const { trainings, moneys, trainingsPerTick, price, upgrades } = state;
+  const { trainings, moneys, trainingsPerSecond, price, upgrades } = state;
   const [isAnimated, setIsAnimated] = useState(false);
   const [openTrophies, setOpenTrophies] = useState(false);
 
   useInterval(() => {
     dispatch({ type: 'tick' });
-  }, 1000);
+  }, 1000 / TICKS_PER_SECONDS);
 
   useInterval(() => {
     saveState(state);
@@ -73,10 +79,10 @@ function App({ setScore }) {
           <div className="title">Cliquer Pour Former</div>
           <div className="subtitle">avec Régis</div>
           <p className="trainings">
+            {trainings > 1 ? 'Personnes formées' : 'Personne formée'}:&nbsp;
             {prettyBigNumber(trainings)}
-            {trainings > 1 ? ' personnes formées' : ' personne formée'}
           </p>
-          <p className="moneys">{prettyBigNumber(moneys)}$ disponible</p>
+          <p className="moneys">Digidollars : {prettyBigNumber(moneys)} Ð</p>
           <div
             className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
             onClick={() => {
@@ -113,7 +119,7 @@ function App({ setScore }) {
           {openTrophies && (
             <AchievementsList
               trainings={trainings}
-              trainingsPerTick={trainingsPerTick}
+              trainingsPerSecond={trainingsPerSecond}
             />
           )}
           <p className="trophy" onClick={() => setOpenTrophies(true)}>
@@ -121,7 +127,7 @@ function App({ setScore }) {
           </p>
           <Achievements
             trainings={trainings}
-            trainingsPerTick={trainingsPerTick}
+            trainingsPerSecond={trainingsPerSecond}
           />
         </main>
         <aside>
@@ -246,7 +252,7 @@ const Upgrade = ({
             <p>{description}</p>
           </div>
           <div className="upgrade-capsule__amount">
-            <p>{formatBigNumber(price)}</p>
+            <p>{formatBigNumber(price)} Ð</p>
           </div>
         </div>
         {tips && moneys < price && (
@@ -268,26 +274,27 @@ const Upgrade = ({
 const reducer = (state, { type, name }) => {
   switch (type) {
     case 'tick': {
+      const newTrainings = state.trainingsPerSecond / TICKS_PER_SECONDS;
       return {
         ...state,
-        trainings: state.trainings + state.trainingsPerTick,
-        moneys: state.moneys + state.trainingsPerTick * state.moneysPerTraining,
+        trainings: (state.trainings + newTrainings) || 0,
+        moneys: (state.moneys + newTrainings * state.moneysPerTraining) || 0,
       };
     }
     case 'click': {
       return {
         ...state,
-        trainings: state.trainings + 1 + state.trainingsPerTick,
+        trainings: state.trainings + 1 + state.trainingsPerSecond,
         moneys:
-          state.moneys + (1 + state.trainingsPerTick) * state.moneysPerTraining,
+          state.moneys + (1 + state.trainingsPerSecond) * state.moneysPerTraining,
       };
     }
     case 'buy': {
       return {
         ...state,
         upgrades: state.upgrades.concat(name),
-        trainingsPerTick: nextTrainingsPerTick(
-          state.trainingsPerTick,
+        trainingsPerSecond: nextTrainingsPerSecond(
+          state.trainingsPerSecond,
           state.upgrades.length + 1,
         ),
         moneysPerTraining: nextMoneysPerTraining(
