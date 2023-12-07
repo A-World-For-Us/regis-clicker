@@ -19,13 +19,13 @@ body {
   flex-basis: 0;
 }
 
-.app--wrapper{
+.app--wrapper {
   display: flex;
   flex-direction: column;
-  flex: 1;  
+  flex: 1;
 }
 
-.page{
+.page {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@ aside h1 {
   justify-content: center;
   font-size: 5rem;
   color: var(--color-red);
-  text-shadow: var(--color-dark-green) 0.20rem 0.20rem;
+  text-shadow: var(--color-dark-green) 0.2rem 0.2rem;
 }
 
 .subtitle {
@@ -382,6 +382,16 @@ aside h1 {
   color: gold;
 }
 
+.win-screen-link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.win-screen-img {
+  width: 300px;
+  margin-inline: auto;
+}
+
 /* Keyframes pour l'animation de défilement du texte */
 @keyframes slide-left {
   from {
@@ -394,7 +404,7 @@ aside h1 {
 
 @keyframes slide-achievementsList {
   from {
-    top: -100vh; 
+    top: -100vh;
   }
   to {
     top: 15vh;
@@ -403,7 +413,7 @@ aside h1 {
 
 @keyframes slide-achievement {
   from {
-    bottom: -300px; 
+    bottom: -300px;
   }
   to {
     bottom: 15px;
