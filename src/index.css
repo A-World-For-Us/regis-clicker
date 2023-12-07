@@ -105,7 +105,7 @@ aside h1 {
   line-height: 3rem;
   font-weight: 300;
   color: var(--color-red);
-  width: 100%;
+  align-self: flex-start;
 }
 
 .rate {
@@ -137,6 +137,17 @@ aside h1 {
   aspect-ratio: 1;
 }
 
+.clicker-wrapper:hover {
+  animation:
+    pulse 2s infinite,
+    hover-enter 0.4s forwards;
+}
+.clicker-wrapper:not(:hover) {
+  animation:
+    hover-exit 0.4s forwards,
+    pulse 2s infinite;
+}
+
 .train-animation {
   animation: pulse 0.5s;
 }
@@ -151,6 +162,12 @@ aside h1 {
   line-height: 5rem;
   font-weight: 300;
   color: var(--color-dark-green);
+}
+
+.warp-pipe {
+  align-self: end;
+  margin-inline-end: 5em;
+  height: 8em;
 }
 
 .upgrade-category {
@@ -361,18 +378,47 @@ aside h1 {
 
 @keyframes pulse {
   0% {
-    transform: scale(0.95);
     box-shadow: 0 0 0 0 rgba(170, 58, 58, 0.7);
   }
 
   70% {
-    transform: scale(1);
     box-shadow: 0 0 0 25px rgba(170, 58, 58, 0);
   }
 
   100% {
-    transform: scale(0.95);
     box-shadow: 0 0 0 0 rgba(170, 58, 58, 0);
+  }
+}
+
+@keyframes hover-enter {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.05);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  75% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes hover-exit {
+  0% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -504,5 +550,14 @@ aside h1 {
     top: 100%;
     left: var(--ornament-left);
   }
+}
 
+#particles-canvas {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
 }

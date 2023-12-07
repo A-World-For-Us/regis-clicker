@@ -9,6 +9,9 @@ import WinScreen from './WinScreen';
 import Snowfall from 'react-snowfall';
 import Ornament from './Ornament';
 
+import { ParticleCanvas } from './particle_system/ParticleCanvas';
+import { randomWorkerEmoji } from './particle_system/utils';
+
 const upgradesParsed = toml.parse(upgrades);
 const achievementsParsed = toml.parse(achievements);
 
@@ -18,7 +21,7 @@ const PROD_INCREASE_FLAT = 1;
 const PROD_INCREASE_RATE = 1.5;
 const PRICE_PER_TRAINING = 1;
 const MONEY_PER_TRAINING_INCREASE_RATE = 2;
-const TICKS_PER_SECONDS = 100;
+const TICKS_PER_SECONDS = 10;
 
 const KEY = 'regis-clicker-save';
 let defaultState = {
@@ -115,6 +118,7 @@ function App({ setScore }) {
         return <Ornament upgrade={upgrade} />;
       })}
 
+      <ParticleCanvas />
       <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
       <div className="app">
         <main>
@@ -130,9 +134,14 @@ function App({ setScore }) {
           <p className="moneys">Digidollars : {prettyBigNumber(moneys)} Ð</p>
           <div
             className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
-            onClick={() => {
+            onClick={e => {
               dispatch({ type: 'click' });
               setIsAnimated(true);
+              window.dispatchEvent(
+                new CustomEvent('new-particle', {
+                  detail: { x: e.clientX, y: e.clientY },
+                }),
+              );
             }}
             onAnimationEnd={() => setIsAnimated(false)}
           >
@@ -174,6 +183,7 @@ function App({ setScore }) {
             trainings={trainings}
             trainingsPerSecond={trainingsPerSecond}
           />
+          <Pipe trainings={trainings} />
           {hasWon && (
             <>
               <p
@@ -200,6 +210,27 @@ function App({ setScore }) {
     </div>
   );
 }
+
+const Pipe = ({ trainings }) => {
+  const roundedUp = Math.ceil(trainings);
+
+  useEffect(() => {
+    const div = document.getElementsByClassName('warp-pipe');
+    const randomX = (Math.random() * div[0].offsetWidth) / 2;
+    // Fired twice in development mode
+    window.dispatchEvent(
+      new CustomEvent('new-particle', {
+        detail: {
+          emoji: randomWorkerEmoji(),
+          x: div[0].offsetLeft + div[0].offsetWidth / 4 + randomX,
+          y: div[0].offsetTop + 2,
+        },
+      }),
+    );
+  }, [roundedUp]);
+
+  return <img className="warp-pipe" src="warp_pipe.webp" />;
+};
 
 const Upgrades = ({ current, all, moneys, dispatch, price }) => {
   const categories = Object.entries(all).map(nameAndUpgrade => {
