@@ -82,7 +82,7 @@ function App({ setScore }) {
             {trainings > 1 ? 'Personnes formées' : 'Personne formée'}:&nbsp;
             {prettyBigNumber(trainings)}
           </p>
-          <p className="moneys">{prettyBigNumber(moneys)}$ disponible</p>
+          <p className="moneys">Digidollars : {prettyBigNumber(moneys)} Ð</p>
           <div
             className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
             onClick={() => {
@@ -252,7 +252,7 @@ const Upgrade = ({
             <p>{description}</p>
           </div>
           <div className="upgrade-capsule__amount">
-            <p>{formatBigNumber(price)}</p>
+            <p>{formatBigNumber(price)} Ð</p>
           </div>
         </div>
         {tips && moneys < price && (
