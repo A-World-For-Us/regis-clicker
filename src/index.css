@@ -105,7 +105,7 @@ aside h1 {
   line-height: 3rem;
   font-weight: 300;
   color: var(--color-red);
-  width: 100%;
+  align-self: flex-start;
 }
 
 .rate {
@@ -124,21 +124,32 @@ aside h1 {
   width: 100%;
 }
 
-.clicker-wrapper {
+.clicker-wrapper-outer {
   user-select: none;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  animation: click 200ms forwards;
+}
+
+.clicker-wrapper {
   border: 5px solid var(--color-red);
   border-radius: 99999px;
   height: 400px;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
   overflow: hidden;
   background-color: #a4b787;
-  animation: pulse 2s infinite;
   aspect-ratio: 1;
+  animation: pulse 2s infinite;
 }
 
-.train-animation {
-  animation: pulse 0.5s;
+.clicker-wrapper:hover {
+  animation:
+    pulse 2s infinite,
+    hover-enter 0.4s forwards;
+}
+.clicker-wrapper:not(:hover) {
+  animation:
+    hover-exit 0.4s forwards,
+    pulse 2s infinite;
 }
 
 .clicker {
@@ -375,18 +386,59 @@ aside h1 {
 
 @keyframes pulse {
   0% {
-    transform: scale(0.95);
     box-shadow: 0 0 0 0 rgba(170, 58, 58, 0.7);
   }
 
   70% {
-    transform: scale(1);
     box-shadow: 0 0 0 25px rgba(170, 58, 58, 0);
   }
 
   100% {
-    transform: scale(0.95);
     box-shadow: 0 0 0 0 rgba(170, 58, 58, 0);
+  }
+}
+
+@keyframes click {
+  0% {
+  }
+
+  40% {
+    transform: scale(1.05);
+  }
+
+  100% {
+  }
+}
+
+@keyframes hover-enter {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.05);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  75% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes hover-exit {
+  0% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -518,5 +570,14 @@ aside h1 {
     top: 100%;
     left: var(--ornament-left);
   }
+}
 
+#particles-canvas {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
 }
