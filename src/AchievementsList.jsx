@@ -1,7 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import toml from 'toml';
 import achievements from './achievements.toml?raw';
-import { Slide } from 'react-awesome-reveal';
 
 const achievementsParsed = toml.parse(achievements).achievements.reverse();
 

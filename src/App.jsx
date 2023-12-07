@@ -54,6 +54,7 @@ function App({ setScore }) {
 
   return (
     <div
+      className="app--wrapper"
       onClick={e => {
         if (e.target.closest('.achievementsList')) {
           return;
@@ -69,7 +70,8 @@ function App({ setScore }) {
       <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
       <div className="app">
         <main>
-          <div className="title">Cliquer Pour Former avec Régis</div>
+          <div className="title">Cliquer Pour Former</div>
+          <div className="subtitle">avec Régis</div>
           <p className="trainings">
             {prettyBigNumber(trainings)}
             {trainings > 1 ? ' personnes formées' : ' personne formée'}
@@ -108,10 +110,6 @@ function App({ setScore }) {
             </p>
           )}
           <div className="has-grow"></div>
-          <Achievements
-            trainings={trainings}
-            trainingsPerTick={trainingsPerTick}
-          />
           {openTrophies && (
             <AchievementsList
               trainings={trainings}
@@ -121,6 +119,10 @@ function App({ setScore }) {
           <p className="trophy" onClick={() => setOpenTrophies(true)}>
             🏆
           </p>
+          <Achievements
+            trainings={trainings}
+            trainingsPerTick={trainingsPerTick}
+          />
         </main>
         <aside>
           <Upgrades

@@ -1,5 +1,4 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
-import { Slide } from 'react-awesome-reveal';
 
 function Achievement(props) {
   useEffect(() => {
@@ -10,18 +9,16 @@ function Achievement(props) {
   }, []);
 
   return (
-    <Slide direction="up" duration="500">
-      <div key={props.id} className="achievement">
-        <div className="achievement--emoji">🏆</div>
-        <div className="achievement--content">
-          <strong>{props.name}</strong>
-          <p>{props.description}</p>
-        </div>
-        <div className="achievement--close" onClick={props.removeAchievement}>
-          X
-        </div>
+    <div key={props.id} className="achievement">
+      <div className="achievement--emoji">🏆</div>
+      <div className="achievement--content">
+        <strong>{props.name}</strong>
+        <p>{props.description}</p>
       </div>
-    </Slide>
+      <div className="achievement--close" onClick={props.removeAchievement}>
+        X
+      </div>
+    </div>
   );
 }
 
