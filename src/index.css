@@ -331,17 +331,21 @@ aside h1 {
   overflow: hidden;
   white-space: nowrap;
   background-color: var(--color-red);
-  color: var(--color-beige);
-  text-shadow: var(--color-dark-green) 0.1rem 0.1rem;
+  color: white;
   padding: 10px;
   width: 100%;
 }
 
 .ticker-text {
-  display: inline-block;
+  display: flex;
+  gap: 15px;
   position: relative;
   left: 100%;
-  animation: slide-left 20s linear infinite;
+  animation: slide-left 45s linear infinite;
+}
+
+.ticker-text a {
+  color: gold;
 }
 
 /* Keyframes pour l'animation de défilement du texte */
