@@ -68,14 +68,27 @@ aside h1 {
 
 .title {
   font-family: 'Pacifico', sans-serif;
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: center;
   font-size: 5rem;
   color: var(--color-red);
-  text-shadow: var(--color-dark-green) 0.25rem 0.25rem;
+  text-shadow: var(--color-dark-green) 0.20rem 0.20rem;
+}
+
+.subtitle {
+  font-family: 'Pacifico', sans-serif;
+  display: flex;
+  position: relative;
+  top: -15px;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--color-red);
+  text-shadow: var(--color-dark-green) 0.1rem 0.1rem;
 }
 
 .trainings {

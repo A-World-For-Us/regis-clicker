@@ -70,7 +70,8 @@ function App({ setScore }) {
       <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
       <div className="app">
         <main>
-          <div className="title">Cliquer Pour Former avec Régis</div>
+          <div className="title">Cliquer Pour Former</div>
+          <div className="subtitle">avec Régis</div>
           <p className="trainings">
             {prettyBigNumber(trainings)}
             {trainings > 1 ? ' personnes formées' : ' personne formée'}
