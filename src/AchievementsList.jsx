@@ -11,7 +11,7 @@ function AchievementsList(props) {
       {achievementsParsed.map(a => {
         if (
           a.trainings <= props.trainings &&
-          a.trainingsPerTick <= props.trainingsPerTick
+          a.trainingsPerSecond <= props.trainingsPerSecond
         ) {
           return (
             <p>
