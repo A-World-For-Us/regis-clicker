@@ -32,15 +32,15 @@ let defaultState = {
 
   // Increase rate computation We could use the above but we want to be able
   // to compute it too when it's raised by manual action such as clicks
-  last: {clicks: 0},
-  ratePerSecond: {clicks: 0},
+  last: { clicks: 0 },
+  ratePerSecond: { clicks: 0 },
 };
 let savedState = localStorage.getItem(KEY);
 if (savedState) {
   defaultState = {
     ...defaultState,
-    ...JSON.parse(localStorage.getItem(KEY))
-  }
+    ...JSON.parse(localStorage.getItem(KEY)),
+  };
   if (defaultState.trainingsPerTick) {
     delete defaultState.trainingsPerTick;
   }
@@ -57,7 +57,14 @@ const nextMoneysPerTraining = (previousMoneyPerTraining, level) =>
 
 function App({ setScore }) {
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const { trainings, moneys, trainingsPerSecond, price, upgrades, ratePerSecond } = state;
+  const {
+    trainings,
+    moneys,
+    trainingsPerSecond,
+    price,
+    upgrades,
+    ratePerSecond,
+  } = state;
   const [isAnimated, setIsAnimated] = useState(false);
   const [openTrophies, setOpenTrophies] = useState(false);
 
@@ -85,7 +92,8 @@ function App({ setScore }) {
     setScore(trainings);
   }, 10_000);
 
-  const increaseRate = ratePerSecond.clicks * trainingsPerSecond + trainingsPerSecond;
+  const increaseRate =
+    ratePerSecond.clicks * trainingsPerSecond + trainingsPerSecond;
 
   return (
     <div
@@ -117,7 +125,7 @@ function App({ setScore }) {
             {prettyBigNumber(trainings)}
           </p>
           <p className="rate">
-            {increaseRate > 0 && <span> +{(increaseRate).toFixed(2)}/s</span>}
+            {increaseRate > 0 && <span> +{increaseRate.toFixed(2)}/s</span>}
           </p>
           <p className="moneys">Digidollars : {prettyBigNumber(moneys)} Ð</p>
           <div
@@ -361,7 +369,7 @@ const reducer = (state, { type, name }) => {
         ...state,
         last: { clicks: state.clicks },
         ratePerSecond: { clicks: state.clicks - state.last.clicks },
-      }
+      };
     }
   }
 };
