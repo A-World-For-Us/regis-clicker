@@ -10,9 +10,24 @@ body {
 }
 
 .app {
+  flex: 1;
   display: flex;
   flex-direction: row;
   background-color: var(--color-beige);
+  overflow: hidden;
+  flex-basis: 0;
+}
+
+.app--wrapper{
+  display: flex;
+  flex-direction: column;
+  flex: 1;  
+}
+
+.page{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
@@ -20,14 +35,13 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 aside {
   background-color: var(--color-red);
   border-left: 15px solid var(--color-green);
   width: 30%;
-  height: 100vh;
   overflow-y: scroll;
 }
 
@@ -86,12 +100,12 @@ aside h1 {
   border: 5px solid var(--color-red);
   border-radius: 99999px;
   height: 400px;
-  width: 400px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
   overflow: hidden;
   background-color: #a4b787;
   animation: pulse 2s infinite;
+  aspect-ratio: 1;
 }
 
 .train-animation {
@@ -216,6 +230,9 @@ aside h1 {
   font-size: 1rem;
   margin: 1rem;
   width: 500px;
+  position: absolute;
+  bottom: 15px;
+  animation: slide-achievement 0.5s;
 }
 
 .achievement--emoji {
@@ -246,10 +263,13 @@ aside h1 {
 }
 
 .trophy {
-  align-self: flex-end;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   font-size: 3rem;
   background-color: var(--color-green);
   padding: 1rem;
+  margin: 3rem;
   border: 1px solid var(--color-dark-green);
   border-radius: 99999px;
   height: 100px;
@@ -275,8 +295,8 @@ aside h1 {
   box-shadow: 0 0 5px 5px rgba(95, 111, 82, 0.5);
   padding: 1rem;
   overflow-y: scroll;
-  scrollbar-width: none;
   border-radius: 10px;
+  animation: slide-achievementsList 0.5s;
 }
 
 .achievementsList::-webkit-scrollbar {
@@ -355,5 +375,23 @@ aside h1 {
   }
   to {
     left: -100%; /* Fin à gauche, ce qui dépend de la longueur du texte */
+  }
+}
+
+@keyframes slide-achievementsList {
+  from {
+    top: -100vh; 
+  }
+  to {
+    top: 15vh;
+  }
+}
+
+@keyframes slide-achievement {
+  from {
+    bottom: -300px; 
+  }
+  to {
+    bottom: 15px;
   }
 }

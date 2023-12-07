@@ -54,6 +54,7 @@ function App({ setScore }) {
 
   return (
     <div
+      className="app--wrapper"
       onClick={e => {
         if (e.target.closest('.achievementsList')) {
           return;
@@ -108,10 +109,6 @@ function App({ setScore }) {
             </p>
           )}
           <div className="has-grow"></div>
-          <Achievements
-            trainings={trainings}
-            trainingsPerTick={trainingsPerTick}
-          />
           {openTrophies && (
             <AchievementsList
               trainings={trainings}
@@ -121,6 +118,10 @@ function App({ setScore }) {
           <p className="trophy" onClick={() => setOpenTrophies(true)}>
             🏆
           </p>
+          <Achievements
+            trainings={trainings}
+            trainingsPerTick={trainingsPerTick}
+          />
         </main>
         <aside>
           <Upgrades

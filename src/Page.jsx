@@ -86,10 +86,10 @@ const Page = () => {
   }, [score, myRankData, name]);
 
   return (
-    <>
+    <div className="page">
       <Bandeau prepend={message} append={leaderMessage + ' ' + rankMessage} />
       <App setScore={setScore} />
-    </>
+    </div>
   );
 };
 
