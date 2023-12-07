@@ -61,6 +61,7 @@ aside h1 {
   justify-content: center;
   font-size: 5rem;
   color: var(--color-red);
+  text-shadow: var(--color-dark-green) 0.25rem 0.25rem;
 }
 
 .trainings {
@@ -70,7 +71,6 @@ aside h1 {
   line-height: 3rem;
   font-weight: 300;
   color: var(--color-red);
-  text-shadow: var(--color-white) 0.2rem 0.3rem;
   width: 100%;
 }
 
@@ -100,6 +100,14 @@ aside h1 {
 
 .clicker {
   margin: auto;
+}
+
+.clicker-tips {
+  font-family: 'Pacifico', sans-serif;
+  font-size: 1rem;
+  line-height: 5rem;
+  font-weight: 300;
+  color: var(--color-dark-green);
 }
 
 .upgrade-category {
@@ -149,6 +157,27 @@ aside h1 {
 
 .upgrade-capsule__amount {
   text-align: right;
+}
+
+.upgrade-capsule--tips {
+  width: 100%;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  animation: 2s fade infinite ease-in-out;
+}
+
+@keyframes fade {
+  10% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+  }
 }
 
 .debug {
@@ -302,17 +331,21 @@ aside h1 {
   overflow: hidden;
   white-space: nowrap;
   background-color: var(--color-red);
-  color: var(--color-beige);
-  text-shadow: var(--color-dark-green) 0.1rem 0.1rem;
+  color: white;
   padding: 10px;
   width: 100%;
 }
 
 .ticker-text {
-  display: inline-block;
+  display: flex;
+  gap: 15px;
   position: relative;
   left: 100%;
-  animation: slide-left 20s linear infinite;
+  animation: slide-left 45s linear infinite;
+}
+
+.ticker-text a {
+  color: gold;
 }
 
 /* Keyframes pour l'animation de défilement du texte */

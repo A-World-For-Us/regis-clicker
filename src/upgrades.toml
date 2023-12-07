@@ -1,16 +1,22 @@
 [[Collaborateurs]]
 name = "Régis"
-description = "Il est sympa mais un peu désorganisé."
+description = "Il est sympa mais un peu désorganisé"
+buyableTips = ["Bien joué ! Vous avez assez d'argent pour débloquer Régis, cliquez dessus !"]
 
 [[Collaborateurs]]
 name = "Pétronille"
-description = "Les jeunes avec leur TokTok savent utiliser les ordinateurs."
+description = "Les jeunes avec leur TokTok savent utiliser les ordinateurs"
+requirement = ["Digiforma"]
+
+[[Collaborateurs]]
+name = "Une armée de formateurs"
+description = "Plus on est de fous, plus on rit"
 requirement = ["Digiforma"]
 
 [[Collaborateurs]]
 name = "Kat Jépété"
-description = "L'intelligence artificielle c'est son dada."
-requirement = ["Multi-Centres"]
+description = "L'intelligence artificielle c'est son dada"
+requirement = ["Multi-Centres", "Audit de Surveillance"]
 
 [["Écosystème"]]
 name = "Formalerte"
@@ -66,6 +72,7 @@ requirement = ["Excel"]
 name = "Salle de classe"
 description = "C'est comme une salle de réunion mais avec des tables"
 requirement= ["Régis"]
+tips = ["Vous pouvez de nouveau débloquer des améliorations. Continuez de cliquer pour débloquer la Galaxy Digiforma et devenir le plus gros des OF !"]
 
 [["Modalités"]]
 name = "Amphithéâtre"
@@ -80,7 +87,7 @@ requirement = ["Visio", "OF Connect"]
 [["Modalités"]]
 name = "Réalité Virtuelle"
 description = "On a l'air bizarre mais on apprend bien"
-requirement = ["MOOC", "Signature Électronique", "Digiformag"]
+requirement = ["Kat Jépété", "MOOC"]
 
 [["Fonctionnalités"]]
 name = "Paiement en ligne"
@@ -93,34 +100,34 @@ description = "Pour les OPCO un peu trop tatillons"
 requirement = ["Digiforma"]
 
 [["Fonctionnalités"]]
-name = "Visio"
-description = "Et tout le monde met sa caméra s'il vous plaît"
-requirement = ["Digiforma"]
-
-[["Fonctionnalités"]]
-name = "Multi-Centres"
-description = "Avec un tiret et un S s'il vous plaît"
-requirement = ["Digiforma"]
-
-[["Fonctionnalités"]]
-name = "Certification Numérique"
-description = "C'est comme un diplôme mais on a pas le droit de les appeler comme ça"
-requirement = ["Digiforma"]
-
-[["Fonctionnalités"]]
 name = "Marketplace"
 description = "Rien de mieux que de faire ses courses sur Digiforma"
 requirement = ["Digiforma"]
 
+[["Fonctionnalités"]]
+name = "Visio"
+description = "Et tout le monde met sa caméra s'il vous plaît"
+requirement = ["Digiforma", "Pétronille"]
+
+[["Fonctionnalités"]]
+name = "Certification Numérique"
+description = "C'est comme un diplôme mais on a pas le droit de les appeler comme ça"
+requirement = ["Digiforma", "Pétronille"]
+
+[["Fonctionnalités"]]
+name = "Multi-Centres"
+description = "Avec un tiret et un S s'il vous plaît"
+requirement = ["Digiforma", "Une armée de formateurs"]
+
 [[Certifications]]
 name = "Qualiopi"
 description = "Avec Digiforma c'est facile, mais on oublie pas sa veille"
-requirement = ["Digiforma", "Formalerte"]
+requirement = ["Digiforma", "Formalerte", "Pétronille"]
 
 [[Certifications]]
 name = "Audit de surveillance"
 description = "Il faut pas se laisser aller"
-requirement = ["Qualiopi"]
+requirement = ["Qualiopi", "Pétronille"]
 
 [[Certifications]]
 name = "Audit de surveillance 2"
