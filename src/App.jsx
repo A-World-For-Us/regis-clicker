@@ -57,10 +57,11 @@ function App({ setScore }) {
     return (
       upgrades.length === upgradesParsed.length ||
       achievementsParsed.achievements.every(
-        a => a.trainings <= trainings && a.trainingsPerTick <= trainingsPerTick,
+        a =>
+          a.trainings <= trainings && a.trainingsPerTick <= trainingsPerSecond,
       )
     );
-  }, [achievementsParsed, trainings, trainingsPerTick]);
+  }, [achievementsParsed, trainings, trainingsPerSecond]);
   const [openWinScreen, setOpenWinScreen] = useState(hasWon);
 
   useInterval(() => {
@@ -308,8 +309,8 @@ const reducer = (state, { type, name }) => {
       const newTrainings = state.trainingsPerSecond / TICKS_PER_SECONDS;
       return {
         ...state,
-        trainings: (state.trainings + newTrainings) || 0,
-        moneys: (state.moneys + newTrainings * state.moneysPerTraining) || 0,
+        trainings: state.trainings + newTrainings || 0,
+        moneys: state.moneys + newTrainings * state.moneysPerTraining || 0,
       };
     }
     case 'click': {
@@ -317,7 +318,8 @@ const reducer = (state, { type, name }) => {
         ...state,
         trainings: state.trainings + 1 + state.trainingsPerSecond,
         moneys:
-          state.moneys + (1 + state.trainingsPerSecond) * state.moneysPerTraining,
+          state.moneys +
+          (1 + state.trainingsPerSecond) * state.moneysPerTraining,
       };
     }
     case 'buy': {

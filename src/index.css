@@ -432,13 +432,12 @@ aside h1 {
 }
 
 .ornament-img{
-  max-width: calc(var(--ornament-size) - var(--ornament-size)/4);
-  max-height: calc(var(--ornament-size) - var(--ornament-size)/4);
+  max-width: calc(var(--ornament-size) - var(--ornament-size)/3);
+  max-height: calc(var(--ornament-size) - var(--ornament-size)/3);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
-  /* top: calc(var(--ornament-size) / -8); */
 }
 
 /* Keyframes pour l'animation de défilement du texte */
