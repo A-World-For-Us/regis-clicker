@@ -7,6 +7,11 @@ body {
   --color-white: #f4f4f4;
   --color-beige: #fcf5ed;
   --color-brown: #352e24;
+  --ornament-left: 0;
+  --ornament-v: 10s;
+  --ornament-rand: 0;
+  --ornament-size: 200px;
+  --ornament-color: #aa3a3a;
   overflow: hidden;
 }
 
@@ -14,7 +19,6 @@ body {
   flex: 1;
   display: flex;
   flex-direction: row;
-  background-color: var(--color-beige);
   overflow: hidden;
   flex-basis: 0;
 }
@@ -37,6 +41,7 @@ main {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  z-index: 2;
 }
 
 aside {
@@ -44,6 +49,7 @@ aside {
   border-left: 15px solid var(--color-green);
   width: 30%;
   overflow-y: scroll;
+  z-index: 2;
 }
 
 aside::-webkit-scrollbar {
@@ -368,6 +374,7 @@ aside h1 {
   color: white;
   padding: 10px;
   width: 100%;
+  z-index: 4;
 }
 
 .ticker-text {
@@ -390,6 +397,48 @@ aside h1 {
 .win-screen-img {
   width: 300px;
   margin-inline: auto;
+}
+
+.ornament{
+  position: absolute;
+  z-index: 0;
+  height: var(--ornament-size);
+  width: var(--ornament-size);
+  background-color: var(--ornament-color);
+  border-radius: 999px;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation: ornament-fall var(--ornament-v) linear infinite;
+}
+
+.ornament-top{
+  height: calc(var(--ornament-size) / 8);
+  position: relative;
+  width: calc(var(--ornament-size) / 4);
+  background-color: #ffa425;
+  left: calc(var(--ornament-size) / 2 - calc(var(--ornament-size) / 8));
+  top: calc((var(--ornament-size) / 16) * -1);
+  border-radius: 20px;
+}
+
+
+.ornament-buckle{
+  height: calc(var(--ornament-size) / 8);
+  position: relative;
+  width: calc(var(--ornament-size) / 8);
+  border: solid 2px #ffa425;
+  border-radius: 9999px;
+  left: calc(var(--ornament-size) / 2 - calc(var(--ornament-size) / 16));
+  top: calc((var(--ornament-size) / 4) * -1);
+}
+
+.ornament-img{
+  max-width: calc(var(--ornament-size) - var(--ornament-size)/4);
+  max-height: calc(var(--ornament-size) - var(--ornament-size)/4);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  /* top: calc(var(--ornament-size) / -8); */
 }
 
 /* Keyframes pour l'animation de défilement du texte */
@@ -418,4 +467,34 @@ aside h1 {
   to {
     bottom: 15px;
   }
+}
+
+@keyframes ornament-fall {
+  0%{
+    top: calc(var(--ornament-size) * -1);
+    left: var(--ornament-left);
+  }
+  10%{
+    left: calc(var(--ornament-left) + calc(0.2 * var(--ornament-rand)));
+  }
+  15%{
+    left: calc(var(--ornament-left) + calc(0.5 * var(--ornament-rand)));
+  }
+  25%{
+    left: calc(var(--ornament-left) + calc(1 * var(--ornament-rand)));
+  }
+  50%{
+    left: calc(var(--ornament-left) + calc(0.5 * var(--ornament-rand)));
+  }
+  60%{
+    left: calc(var(--ornament-left) - calc(0.5 * var(--ornament-rand)));
+  }
+  75%{
+    left: calc(var(--ornament-left) + calc(0.7 * var(--ornament-rand)));
+  }
+  100%{
+    top: 100%;
+    left: var(--ornament-left);
+  }
+
 }
