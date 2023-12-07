@@ -1,12 +1,15 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import toml from 'toml';
 import totoroIcon from './totoro-icon.jpeg';
 import upgrades from './upgrades.toml?raw';
+import achievements from './achievements.toml?raw';
 import Achievements from './Achievements';
 import AchievementsList from './AchievementsList';
+import WinScreen from './WinScreen';
 import Snowfall from 'react-snowfall';
 
 const upgradesParsed = toml.parse(upgrades);
+const achievementsParsed = toml.parse(achievements);
 
 const STARTING_PRICE = 10;
 const PRICE_INCREASE_RATE = 2;
@@ -49,6 +52,16 @@ function App({ setScore }) {
   const [isAnimated, setIsAnimated] = useState(false);
   const [openTrophies, setOpenTrophies] = useState(false);
 
+  const hasWon = useMemo(() => {
+    return (
+      upgrades.length === upgradesParsed.length ||
+      achievementsParsed.achievements.every(
+        a => a.trainings <= trainings && a.trainingsPerTick <= trainingsPerTick,
+      )
+    );
+  }, [achievementsParsed, trainings, trainingsPerTick]);
+  const [openWinScreen, setOpenWinScreen] = useState(hasWon);
+
   useInterval(() => {
     dispatch({ type: 'tick' });
   }, 1000 / TICKS_PER_SECONDS);
@@ -65,8 +78,9 @@ function App({ setScore }) {
         if (e.target.closest('.achievementsList')) {
           return;
         } else {
-          if (openTrophies) {
+          if (openTrophies || openWinScreen) {
             setOpenTrophies(false);
+            setOpenWinScreen(false);
             e.preventDefault();
             e.stopPropagation();
           }
@@ -129,6 +143,18 @@ function App({ setScore }) {
             trainings={trainings}
             trainingsPerSecond={trainingsPerSecond}
           />
+          {hasWon && (
+            <>
+              <p
+                className="trophy"
+                style={{ left: '8rem' }}
+                onClick={() => setOpenWinScreen(true)}
+              >
+                🥇
+              </p>
+              {openWinScreen && <WinScreen />}
+            </>
+          )}
         </main>
         <aside>
           <Upgrades
