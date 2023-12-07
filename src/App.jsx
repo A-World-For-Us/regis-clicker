@@ -14,7 +14,8 @@ const PRICE_INCREASE_RATE = 2;
 const PROD_INCREASE_FLAT = 1;
 const PRICE_PER_TRAINING = 1;
 const MONEY_PER_TRAINING_INCREASE_RATE = 2;
-const defaultState = {
+const KEY = 'regis-clicker-save';
+let defaultState = {
   trainings: 0,
   moneys: 0,
   trainingsPerTick: 0,
@@ -22,6 +23,10 @@ const defaultState = {
   price: STARTING_PRICE,
   upgrades: [],
 };
+let savedState = localStorage.getItem(KEY);
+if (savedState) {
+  defaultState = JSON.parse(localStorage.getItem(KEY));
+}
 
 const nextPrice = previousPrice => previousPrice * PRICE_INCREASE_RATE;
 const nextTrainingsPerTick = (previousTrainingsPerTick, level) =>
@@ -31,8 +36,8 @@ const nextMoneysPerTraining = (previousMoneyPerTraining, level) =>
   Math.floor(level / 10) * MONEY_PER_TRAINING_INCREASE_RATE;
 
 function App({ setScore }) {
-  const [{ trainings, moneys, trainingsPerTick, price, upgrades }, dispatch] =
-    useReducer(reducer, defaultState);
+  const [state, dispatch] = useReducer(reducer, defaultState);
+  const { trainings, moneys, trainingsPerTick, price, upgrades } = state;
   const [isAnimated, setIsAnimated] = useState(false);
   const [openTrophies, setOpenTrophies] = useState(false);
 
@@ -41,7 +46,7 @@ function App({ setScore }) {
   }, 1000);
 
   useInterval(() => {
-    console.log('push score');
+    saveState(state);
     setScore(trainings);
   }, 10_000);
 
@@ -321,6 +326,10 @@ function useInterval(callback, delay) {
       };
     }
   }, [delay]);
+}
+
+function saveState(state) {
+  localStorage.setItem(KEY, JSON.stringify(state));
 }
 
 export default App;
