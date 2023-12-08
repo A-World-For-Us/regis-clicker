@@ -63,7 +63,7 @@ function App({ setScore }) {
     trainingsPerSecond,
     price,
     upgrades,
-    ratePerSecond,
+    clicks,
   } = state;
   const [isAnimated, setIsAnimated] = useState(false);
   const [openTrophies, setOpenTrophies] = useState(false);
@@ -84,16 +84,9 @@ function App({ setScore }) {
   }, 1000 / TICKS_PER_SECONDS);
 
   useInterval(() => {
-    dispatch({ type: 'computeRate' });
-  }, 1000);
-
-  useInterval(() => {
     saveState(state);
     setScore(trainings);
   }, 10_000);
-
-  const increaseRate =
-    ratePerSecond.clicks * trainingsPerSecond + trainingsPerSecond;
 
   return (
     <div
@@ -124,9 +117,7 @@ function App({ setScore }) {
             {trainings > 1 ? 'Personnes formées' : 'Personne formée'}:&nbsp;
             {prettyBigNumber(trainings)}
           </p>
-          <p className="rate">
-            {increaseRate > 0 && <span> +{increaseRate.toFixed(2)}/s</span>}
-          </p>
+          <IncreaseRate trainingsPerSecond={trainingsPerSecond} clicks={clicks} />
           <p className="moneys">Digidollars : {prettyBigNumber(moneys)} Ð</p>
           <div
             className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
@@ -198,6 +189,22 @@ function App({ setScore }) {
         </aside>
       </div>
     </div>
+  );
+}
+
+const IncreaseRate = ({ trainingsPerSecond, clicks }) => {
+  const [clicksPerSecond, setClicksPerSecond] = useState(0);
+  const [lastClicks, setLastClicks] = useState(0);
+
+  useInterval(() => {
+    setClicksPerSecond(clicks - lastClicks);
+    setLastClicks(clicks);
+  }, 1000);
+
+  const increaseRate = trainingsPerSecond + clicksPerSecond * trainingsPerSecond;
+
+  return (
+    <p className="rate">{increaseRate > 0 && <span> +{increaseRate.toFixed(2)}/s</span>}</p>
   );
 }
 
@@ -362,13 +369,6 @@ const reducer = (state, { type, name }) => {
         ),
         moneys: state.moneys - state.price,
         price: nextPrice(state.price),
-      };
-    }
-    case 'computeRate': {
-      return {
-        ...state,
-        last: { clicks: state.clicks },
-        ratePerSecond: { clicks: state.clicks - state.last.clicks },
       };
     }
   }
