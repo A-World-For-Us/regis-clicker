@@ -226,15 +226,25 @@ function App({ setScore }) {
           )}
           <div className="button-list">
             <p className="trophy" onClick={toggleWelcomeScreen}>
-              <div className="trophy-top"></div>
-              <div className="trophy-buckle"></div>
+              <span className="trophy-top"></span>
+              <span className="trophy-buckle"></span>
               🏠
             </p>
             <p className="trophy" onClick={() => setOpenTrophies(true)}>
-              <div className="trophy-top"></div>
-              <div className="trophy-buckle"></div>
+              <span className="trophy-top"></span>
+              <span className="trophy-buckle"></span>
               <p>🏆</p>
             </p>
+            {hasWon && (
+              <>
+                <p className="trophy" onClick={() => setOpenWinScreen(true)}>
+                  <span className="trophy-top"></span>
+                  <span className="trophy-buckle"></span>
+                  🥇
+                </p>
+                {openWinScreen && <WinScreen />}
+              </>
+            )}
           </div>
           {openWelcomeScreen && <Welcome toggle={toggleWelcomeScreen} />}
           {openTrophies && (
@@ -242,19 +252,6 @@ function App({ setScore }) {
               trainings={trainings}
               trainingsPerSecond={trainingsPerSecond}
             />
-          )}
-
-          {hasWon && (
-            <>
-              <p
-                className="trophy"
-                style={{ left: '8rem' }}
-                onClick={() => setOpenWinScreen(true)}
-              >
-                🥇
-              </p>
-              {openWinScreen && <WinScreen />}
-            </>
           )}
 
           <Achievements
