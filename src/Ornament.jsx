@@ -27,7 +27,19 @@ const imgs = {
   Visio: 'visio.png',
   'Multi-Centres': 'Multi-centres.png',
   Qualiopi: 'qualiopi.png',
-  'Audit de surveillance': 'surveillance.png',
+  'Audit de surveillance': 'Audit1.png',
+  'Audit de surveillance 2': 'Audit2æ.png',
+  'OC Connect': 'OCconnect.png',
+  MOOC: 'Mooc.png',
+  'Paiement en ligne': 'Paiement_en_ligne.png',
+  'Référencement RS': 'RS.png',
+  'Digiformag 4': 'mag4.png',
+  Digiformag: 'mag1.jpg',
+  'Digiformag 2': 'mag2.jpg',
+  'Digiformag 3': 'mag3.jpg',
+  'Digiformag 5': 'mag5.jpg',
+  'Certification Numérique': 'Diplome.png',
+  'Une armée de formateurs': 'army.png',
 };
 
 function Ornament(props) {

@@ -137,7 +137,7 @@ aside h1 {
   user-select: none;
   cursor: pointer;
   transition: 0.3s ease-in-out;
-  animation: click 200ms forwards;
+  animation: click 200ms forwards;  
 }
 
 .clicker-wrapper {
@@ -146,7 +146,6 @@ aside h1 {
   margin-top: 30px;
   margin-bottom: 50px;
   height: 400px;
-  overflow: hidden;
   background-color: #a4b787;
   aspect-ratio: 1;
   animation: pulse 2s infinite;
@@ -179,6 +178,26 @@ aside h1 {
   margin-bottom: 1em;
 
   animation: 1s pulse forwards;
+}
+
+.clicker-top{
+  position: absolute;
+  left: 160px;
+  height: 40px;
+  top: -20px;
+  width: 80px;
+  background-color: #ffa425;
+  border-radius: 9999px;
+}
+
+.clicker-buckle{
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  top: -40px;
+  left: 180px;
+  border: solid 5px #ffa425;
+  border-radius: 9999px;
 }
 
 .level-capsule {
@@ -353,6 +372,27 @@ aside h1 {
     transform: scale(1.2);
   }
 }
+
+.trophy-top{
+  position: absolute;
+  bottom: 90px;
+  left: 35px;
+  height: 15px;
+  width: 30px;
+  background-color: #ffa425;
+  border-radius: 9999px;
+}
+
+.trophy-buckle{
+  position: absolute;
+  bottom: 100px;
+  left: 44px;
+  height: 12px;
+  width: 12px;
+  border: solid 2px #ffa425;
+  border-radius: 9999px;
+}
+
 
 .achievementsList {
   z-index: 1;
