@@ -31,11 +31,6 @@ let defaultState = {
   moneysPerTraining: PRICE_PER_TRAINING,
   price: STARTING_PRICE,
   upgrades: [],
-
-  // Increase rate computation We could use the above but we want to be able
-  // to compute it too when it's raised by manual action such as clicks
-  last: { clicks: 0 },
-  ratePerSecond: { clicks: 0 },
 };
 let savedState = localStorage.getItem(KEY);
 if (savedState) {
