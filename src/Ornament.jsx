@@ -28,7 +28,7 @@ const imgs = {
   'Multi-Centres': 'Multi-centres.png',
   Qualiopi: 'qualiopi.png',
   'Audit de surveillance': 'Audit1.png',
-  'Audit de surveillance 2': 'Audit2æ.png',
+  'Audit de surveillance 2': 'Audit2.png',
   'OC Connect': 'OCconnect.png',
   MOOC: 'Mooc.png',
   'Paiement en ligne': 'Paiement_en_ligne.png',

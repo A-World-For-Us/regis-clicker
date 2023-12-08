@@ -40,7 +40,7 @@ const IMGS = {
   'Multi-Centres': 'Multi-centres.png',
   Qualiopi: 'qualiopi.png',
   'Audit de surveillance': 'Audit1.png',
-  'Audit de surveillance 2': 'Audit2æ.png',
+  'Audit de surveillance 2': 'Audit2.png',
   'OC Connect': 'OCconnect.png',
   MOOC: 'Mooc.png',
   'Paiement en ligne': 'Paiement_en_ligne.png',
@@ -143,10 +143,13 @@ function App({ setScore }) {
           <div className="title">Cliquer Pour Former</div>
           <div className="subtitle">avec Régis</div>
           <p className="trainings">
-            {trainings > 1 ? 'Personnes formées' : 'Personne formée'}&#x202F;:&#x202F;
+            {trainings > 1 ? 'Personnes formées' : 'Personne formée'}
+            &#x202F;:&#x202F;
             {prettyBigNumber(trainings)}
           </p>
-          <p className="moneys">Digidollars&#x202F;:&#x202F;{prettyBigNumber(moneys)} Ð</p>
+          <p className="moneys">
+            Digidollars&#x202F;:&#x202F;{prettyBigNumber(moneys)} Ð
+          </p>
           <div
             className="clicker-wrapper-outer"
             onClick={e => {
