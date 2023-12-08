@@ -19,7 +19,7 @@ body {
   flex: 1;
   display: flex;
   flex-direction: row;
-  overflow: hidden;
+  overflow-y: hidden;
   flex-basis: 0;
 }
 
@@ -37,6 +37,10 @@ body {
   @media (max-height: 1000px) {
     font-size: 12px;
   }
+
+  @media (max-height: 500px) {
+    font-size: 8px;
+  }
 }
 
 .background {
@@ -52,14 +56,15 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
   position: relative;
+  min-width: 500px;
 }
 
 aside {
   background-color: var(--color-red);
   border-left: 15px solid var(--color-green);
   width: 30%;
+  min-width: 400px;
   overflow-y: scroll;
   z-index: 2;
 }
@@ -135,6 +140,7 @@ aside h1 {
   font-size: 2rem;
   color: white;
   width: 100%;
+  font-size: 3em;
 }
 
 .clicker-wrapper-outer {
@@ -150,6 +156,7 @@ aside h1 {
   margin-top: 30px;
   margin-bottom: 50px;
   height: 400px;
+  max-height: min(40vw, 40vh);
   background-color: #a4b787;
   aspect-ratio: 1;
   animation: pulse 2s infinite;
@@ -222,7 +229,7 @@ aside h1 {
   padding: 1rem;
   font-family: 'Pacifico', sans-serif;
   user-select: none;
-  font-size: 2rem;
+  font-size: 2em;
   color: white;
   text-shadow: var(--color-dark-green) 0.1rem 0.1rem;
   cursor: pointer;
@@ -251,7 +258,7 @@ aside h1 {
 }
 
 .upgrade-capsule__name {
-  font-size: 1.5rem;
+  font-size: 1.5em;
   font-family: 'Pacifico', sans-serif;
 }
 
@@ -324,7 +331,7 @@ aside h1 {
   font-size: 1em;
   margin: 1rem;
   width: 500px;
-  max-width: 30%;
+  max-width: 40%;
   position: absolute;
   bottom: 15px;
   right: 15px;
@@ -476,12 +483,12 @@ aside h1 {
 .welcome p {
   width: 100%;
   color: black;
-  font-size: 1.2rem;
+  font-size: 1.2em;
   margin-bottom: 20px;
 }
 
 .welcome img {
-  height: 300px;
+  height: 150px;
   margin: auto;
   border: 5px solid white;
   border-radius: 99999px;
@@ -496,10 +503,11 @@ aside h1 {
   font-family: 'Pacifico', sans-serif;
   color: var(--color-beige);
   text-shadow: var(--color-dark-green) 0.1rem 0.1rem;
-  font-size: 2.5rem;
+  font-size: 2.5em;
   font-weight: 100;
   margin-bottom: 1rem;
   width: 80%;
+
 }
 
 .welcome a {
