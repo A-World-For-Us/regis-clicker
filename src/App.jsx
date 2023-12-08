@@ -23,6 +23,37 @@ const MONEY_PER_TRAINING_INCREASE_RATE = 2;
 const TICKS_PER_SECONDS = 10;
 
 const KEY = 'regis-clicker-save';
+const IMGS = {
+  Régis: 'Regis.png',
+  Pétronille: 'Petronille.png',
+  'Kat Jépété': 'Cat jépété.png',
+  'OF Connect': 'OFconnect.png',
+  Formalerte: 'formalerte.png',
+  Excel: 'Excel.png',
+  Digiforma: 'Digiforma.png',
+  'Salle de classe': 'Salle_de_classe.png',
+  Amphithéâtre: 'Amphi.png',
+  'Réalité Virtuelle': 'Réalitévirtuelle.png',
+  'Signature Électronique': 'Signature_électronique.png',
+  Marketplace: 'Skills.png',
+  Visio: 'visio.png',
+  'Multi-Centres': 'Multi-centres.png',
+  Qualiopi: 'qualiopi.png',
+  'Audit de surveillance': 'Audit1.png',
+  'Audit de surveillance 2': 'Audit2æ.png',
+  'OC Connect': 'OCconnect.png',
+  MOOC: 'Mooc.png',
+  'Paiement en ligne': 'Paiement_en_ligne.png',
+  'Référencement RS': 'RS.png',
+  'Digiformag 4': 'mag4.png',
+  Digiformag: 'mag1.jpg',
+  'Digiformag 2': 'mag2.jpg',
+  'Digiformag 3': 'mag3.jpg',
+  'Digiformag 5': 'mag5.jpg',
+  'Certification Numérique': 'Diplome.png',
+  'Une armée de formateurs': 'army.png',
+};
+
 let defaultState = {
   trainings: 0,
   moneys: 0,
@@ -142,6 +173,9 @@ function App({ setScore }) {
             }}
           >
             <div className="clicker-wrapper">
+              <div className="clicker-top"></div>
+              <div className="clicker-buckle"></div>
+
               <img
                 draggable={false}
                 className="clicker"
@@ -176,9 +210,13 @@ function App({ setScore }) {
               trainingsPerSecond={trainingsPerSecond}
             />
           )}
-          <p className="trophy" onClick={() => setOpenTrophies(true)}>
-            🏆
-          </p>
+          <div className="trophy" onClick={() => setOpenTrophies(true)}>
+            <div className="trophy-top"></div>
+            <div className="trophy-buckle"></div>
+
+            <p>🏆</p>
+          </div>
+
           <Achievements
             trainings={trainings}
             trainingsPerSecond={trainingsPerSecond}
@@ -330,7 +368,7 @@ const Upgrade = ({
           disabled={moneys < price}
         >
           {moneys >= price ? (
-            <img className="upgrade-capsule__icon" src={totoroIcon} />
+            <img className="upgrade-capsule__icon" src={IMGS[name]} />
           ) : (
             <p className="upgrade-capsule__icon">🔒</p>
           )}
