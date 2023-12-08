@@ -6,7 +6,7 @@ const Bandeau = ({ prepend, append }) => (
         <>
           <span>
             🎄Pour conclure l'année 2023 en beauté, retrouvez l’équipe Digiforma
-            autour d’une pause café le Jeudi 21 Décembre 🎄
+            autour d’une pause café en ligne le Jeudi 21 Décembre 🎄
           </span>
           <a
             href="https://app.livestorm.co/p/972d370f-39ce-46cf-8e61-db0d97e0c45f/live?s=b7c1de0c-b5d4-46d3-8eb7-9753ea333537"
