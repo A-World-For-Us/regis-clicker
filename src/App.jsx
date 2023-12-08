@@ -147,7 +147,18 @@ function App({ setScore }) {
 
       {supers.map(it => (
         <Ornament
-          onClick={() => dispatch({ type: 'super', value: it })}
+          onClick={e => {
+            window.dispatchEvent(
+              new CustomEvent('new-particle', {
+                detail: {
+                  x: e.clientX,
+                  y: e.clientY,
+                  count: 10 + 3 * upgrades.length,
+                },
+              }),
+            );
+            dispatch({ type: 'super', value: it });
+          }}
           upgrade={'super'}
           key={it}
         />
