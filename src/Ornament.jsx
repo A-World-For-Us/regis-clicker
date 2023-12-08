@@ -31,7 +31,6 @@ const imgs = {
 };
 
 function Ornament(props) {
-  console.log(props.upgrade);
   const [size, setSize] = useState(`${Math.random() * 150 + 50}px`);
   const [left, setLeft] = useState(`${Math.random() * 60}vw`);
   const [rand, setRand] = useState(`${Math.random() * 100 + 20}px`);
