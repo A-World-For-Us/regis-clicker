@@ -9,12 +9,19 @@ const colors = [
   '#B99470',
   '#4E9525',
   '#EDF0C7',
+  '#095228',
+  '#D4423E',
+  '#133D22',
+  '#8C0B01',
+  '#197541',
+  '#E9B571',
+  '#CB8835',
 ];
 
 const imgs = {
   Régis: 'Regis.png',
   Pétronille: 'Petronille.png',
-  'Kat Jépété': 'Cat jépété.png',
+  'Kat Jépété': 'Cat_jépété.png',
   'OF Connect': 'OFconnect.png',
   Formalerte: 'formalerte.png',
   Excel: 'Excel.png',

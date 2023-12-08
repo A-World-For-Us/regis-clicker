@@ -26,7 +26,7 @@ const KEY = 'regis-clicker-save';
 const IMGS = {
   Régis: 'Regis.png',
   Pétronille: 'Petronille.png',
-  'Kat Jépété': 'Cat jépété.png',
+  'Kat Jépété': 'Cat_jépété.png',
   'OF Connect': 'OFconnect.png',
   Formalerte: 'formalerte.png',
   Excel: 'Excel.png',
