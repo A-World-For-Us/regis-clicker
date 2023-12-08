@@ -9,6 +9,8 @@ import WinScreen from './WinScreen';
 import Snowfall from 'react-snowfall';
 import Ornament from './Ornament';
 
+import { ParticleCanvas } from './particle_system/ParticleCanvas';
+
 const upgradesParsed = toml.parse(upgrades);
 const achievementsParsed = toml.parse(achievements);
 
@@ -18,7 +20,7 @@ const PROD_INCREASE_FLAT = 1;
 const PROD_INCREASE_RATE = 1.5;
 const PRICE_PER_TRAINING = 1;
 const MONEY_PER_TRAINING_INCREASE_RATE = 2;
-const TICKS_PER_SECONDS = 100;
+const TICKS_PER_SECONDS = 10;
 
 const KEY = 'regis-clicker-save';
 let defaultState = {
@@ -29,11 +31,6 @@ let defaultState = {
   moneysPerTraining: PRICE_PER_TRAINING,
   price: STARTING_PRICE,
   upgrades: [],
-
-  // Increase rate computation We could use the above but we want to be able
-  // to compute it too when it's raised by manual action such as clicks
-  last: { clicks: 0 },
-  ratePerSecond: { clicks: 0 },
 };
 let savedState = localStorage.getItem(KEY);
 if (savedState) {
@@ -41,9 +38,6 @@ if (savedState) {
     ...defaultState,
     ...JSON.parse(localStorage.getItem(KEY)),
   };
-  if (defaultState.trainingsPerSecond) {
-    delete defaultState.trainingsPerSecond;
-  }
 }
 
 const nextPrice = previousPrice => previousPrice * PRICE_INCREASE_RATE;
@@ -66,7 +60,6 @@ function App({ setScore }) {
     moneysPerTraining,
     price,
   } = state;
-  const [isAnimated, setIsAnimated] = useState(false);
   const [openTrophies, setOpenTrophies] = useState(false);
 
   const hasWon = useMemo(() => {
@@ -109,9 +102,11 @@ function App({ setScore }) {
         return <Ornament upgrade={upgrade} key={upgrade} />;
       })}
 
+      <ParticleCanvas />
       <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
       <div className="app">
         <main>
+          <div className="background" />
           <div className="title">Cliquer Pour Former</div>
           <div className="subtitle">avec Régis</div>
           <p className="trainings">
@@ -120,18 +115,37 @@ function App({ setScore }) {
           </p>
           <p className="moneys">Digidollars : {prettyBigNumber(moneys)} Ð</p>
           <div
-            className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
-            onClick={() => {
+            className="clicker-wrapper-outer"
+            onClick={e => {
               dispatch({ type: 'click' });
-              setIsAnimated(true);
+
+              const self = e.currentTarget;
+
+              requestAnimationFrame(() => {
+                self.style.animationName = 'none';
+                setTimeout(() => {
+                  self.style.animationName = 'click';
+                }, 1);
+              });
+
+              window.dispatchEvent(
+                new CustomEvent('new-particle', {
+                  detail: {
+                    x: e.clientX,
+                    y: e.clientY,
+                    count: Math.min(3, Math.floor(1 + trainingsPerSecond) / 30),
+                  },
+                }),
+              );
             }}
-            onAnimationEnd={() => setIsAnimated(false)}
           >
-            <img
-              draggable={false}
-              className="clicker"
-              src={imageName(upgrades)}
-            />
+            <div className="clicker-wrapper">
+              <img
+                draggable={false}
+                className="clicker"
+                src={imageName(upgrades)}
+              />
+            </div>
           </div>
           {trainings == 0 && (
             <p className="clicker-tips">
@@ -139,15 +153,17 @@ function App({ setScore }) {
             </p>
           )}
           {trainings > 0 && trainings < 10 && (
-            <p>
+            <p className="clicker-tips">
               Continuer de cliquer pour donner toujours plus de formations ! 🧑‍🏫
             </p>
           )}
           {trainings >= 10 && upgrades.length === 0 && (
-            <p>Regardez à droite, des améliorations sont disponibles 👀</p>
+            <p className="clicker-tips">
+              Regardez à droite, des améliorations sont disponibles 👀
+            </p>
           )}
           {trainings < 100 && upgrades.length > 0 && (
-            <p>
+            <p className="clicker-tips">
               Continuez comme ça pour explorer toutes la Galaxy Digiforma 🪐
             </p>
           )}
