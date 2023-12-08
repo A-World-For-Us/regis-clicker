@@ -46,8 +46,12 @@ body {
 .background {
   position: absolute;
   inset: 0;
-  background: rgb(24,51,78);
-  background: linear-gradient(185deg, rgba(24,51,78,1) 0%, rgba(53,80,109,1) 100%);
+  background: rgb(24, 51, 78);
+  background: linear-gradient(
+    185deg,
+    rgba(24, 51, 78, 1) 0%,
+    rgba(53, 80, 109, 1) 100%
+  );
   z-index: -1;
 }
 
@@ -191,7 +195,7 @@ aside h1 {
   animation: 1s pulse forwards;
 }
 
-.clicker-top{
+.clicker-top {
   position: absolute;
   left: 160px;
   height: 40px;
@@ -201,7 +205,7 @@ aside h1 {
   border-radius: 9999px;
 }
 
-.clicker-buckle{
+.clicker-buckle {
   position: absolute;
   height: 40px;
   width: 40px;
@@ -365,7 +369,7 @@ aside h1 {
   flex-grow: 1;
 }
 
-.button-list{
+.button-list {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -393,7 +397,7 @@ aside h1 {
   }
 }
 
-.trophy-top{
+.trophy-top {
   position: absolute;
   top: -5px;
   left: calc(50% - 15px);
@@ -403,7 +407,7 @@ aside h1 {
   border-radius: 9999px;
 }
 
-.trophy-buckle{
+.trophy-buckle {
   position: absolute;
   bottom: 100px;
   left: 44px;
@@ -412,7 +416,6 @@ aside h1 {
   border: solid 2px #ffa425;
   border-radius: 9999px;
 }
-
 
 .achievementsList {
   z-index: 1;
@@ -439,7 +442,8 @@ aside h1 {
   border-radius: 9999px;
 }
 
-.achievementsList h1, .welcome h1 {
+.achievementsList h1,
+.welcome h1 {
   width: 100%;
   text-align: center;
   font-family: 'Pacifico', sans-serif;
@@ -488,7 +492,7 @@ aside h1 {
 }
 
 .welcome img {
-  height: 300px;
+  height: 200px;
   margin: auto;
   border: 5px solid white;
   border-radius: 99999px;
@@ -496,20 +500,22 @@ aside h1 {
 
 .welcome button {
   cursor: pointer;
-  padding: 10px;
+  padding: 5px;
+  margin: 5px;
   text-align: center;
   background-color: var(--color-red);
   border: 1px solid var(--color-dark-green);
   font-family: 'Pacifico', sans-serif;
   color: var(--color-beige);
   text-shadow: var(--color-dark-green) 0.1rem 0.1rem;
-  font-size: 2.5em;
+  font-size: 2em;
   font-weight: 100;
   margin-bottom: 1rem;
   width: 80%;
 }
 
 .welcome a {
+  font-size: 2em;
   color: var(--color-red);
   text-transform: uppercase;
   text-decoration: none;
@@ -617,7 +623,7 @@ aside h1 {
   animation: ornament-fall var(--ornament-v) linear infinite;
 }
 
-.ornament--super{
+.ornament--super {
   z-index: 1000;
 }
 
