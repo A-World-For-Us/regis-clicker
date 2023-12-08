@@ -58,6 +58,7 @@ let defaultState = {
   trainings: 0,
   moneys: 0,
   clicks: 0,
+  supers: [],
   trainingsPerSecond: 0,
   moneysPerTraining: PRICE_PER_TRAINING,
   price: STARTING_PRICE,
@@ -90,6 +91,7 @@ function App({ setScore }) {
     clicks,
     moneysPerTraining,
     price,
+    supers,
   } = state;
 
   const hasWon = useMemo(() => {
@@ -142,6 +144,8 @@ function App({ setScore }) {
       {upgrades.map(upgrade => {
         return <Ornament upgrade={upgrade} key={upgrade} />;
       })}
+
+      {supers.map((it) => <Ornament onClick={() => dispatch({ type: 'super', value: it })} upgrade={"super"} key={it} />)}
 
       <ParticleCanvas />
       <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
@@ -419,12 +423,25 @@ const reducer = (state, { type, name }) => {
   switch (type) {
     case 'tick': {
       const newTrainings = state.trainingsPerSecond / TICKS_PER_SECONDS;
+      let newSupers = state.supers
+      if(Math.random() < 0.005){
+        newSupers = ["💸"]
+      }
       return {
         ...state,
         trainings: state.trainings + newTrainings || 0,
         moneys: state.moneys + newTrainings * state.moneysPerTraining || 0,
+        supers: newSupers
       };
     }
+    case 'super': {
+      return {
+        ...state,
+        supers: [],
+        moneys: state.moneys + Math.exp(5 + Math.round((state.upgrades.length) / 2))
+      };
+    }
+
     case 'click': {
       return {
         ...state,

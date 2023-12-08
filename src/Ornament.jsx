@@ -53,7 +53,8 @@ function Ornament(props) {
   return (
     <>
       <div
-        className="ornament"
+        className={"ornament" + " " + (props.upgrade === 'super' ? 'ornament--super' : '')}
+        onClick={props.onClick || null}
         style={{
           '--ornament-size': size,
           '--ornament-left': left,
@@ -64,7 +65,11 @@ function Ornament(props) {
       >
         <div className="ornament-top"></div>
         <div className="ornament-buckle"></div>
-        <img className="ornament-img" src={imgs[props.upgrade]} />
+        {props.upgrade !== 'super' ?
+           <img className="ornament-img" src={imgs[props.upgrade]} />
+           :
+           <img className="ornament-img" src={"money.png"} />
+        }
       </div>
     </>
   );

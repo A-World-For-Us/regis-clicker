@@ -604,6 +604,14 @@ aside h1 {
   animation: ornament-fall var(--ornament-v) linear infinite;
 }
 
+.ornament--super{
+  z-index: 1000;
+}
+
+.ornament--super .ornament-img {
+  cursor: pointer;
+}
+
 .ornament-top {
   height: calc(var(--ornament-size) / 8);
   position: relative;
