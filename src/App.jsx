@@ -114,6 +114,7 @@ function App({ setScore }) {
       <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
       <div className="app">
         <main>
+          <div className="background" />
           <div className="title">Cliquer Pour Former</div>
           <div className="subtitle">avec Régis</div>
           <p className="trainings">
@@ -160,15 +161,17 @@ function App({ setScore }) {
             </p>
           )}
           {trainings > 0 && trainings < 10 && (
-            <p>
+            <p className="clicker-tips">
               Continuer de cliquer pour donner toujours plus de formations ! 🧑‍🏫
             </p>
           )}
           {trainings >= 10 && upgrades.length === 0 && (
-            <p>Regardez à droite, des améliorations sont disponibles 👀</p>
+            <p className="clicker-tips">
+              Regardez à droite, des améliorations sont disponibles 👀
+            </p>
           )}
           {trainings < 100 && upgrades.length > 0 && (
-            <p>
+            <p className="clicker-tips">
               Continuez comme ça pour explorer toutes la Galaxy Digiforma 🪐
             </p>
           )}
