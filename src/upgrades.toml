@@ -11,7 +11,7 @@ requirement = ["Digiforma"]
 [[Collaborateurs]]
 name = "Une armée de formateurs"
 description = "Plus on est de fous, plus on rit"
-requirement = ["Digiforma"]
+requirement = ["Pétronille", "Qualiopi"]
 
 [[Collaborateurs]]
 name = "Kat Jépété"
