@@ -121,7 +121,7 @@ requirement = ["Digiforma", "Une armée de formateurs"]
 
 [[Certifications]]
 name = "Qualiopi"
-description = "Heureusement vous avez Digiforma et Qualiopi"
+description = "Heureusement vous avez Digiforma et Formalerte"
 requirement = ["Digiforma", "Formalerte", "Pétronille"]
 
 [[Certifications]]
