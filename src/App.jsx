@@ -43,9 +43,6 @@ if (savedState) {
     ...defaultState,
     ...JSON.parse(localStorage.getItem(KEY)),
   };
-  if (defaultState.trainingsPerSecond) {
-    delete defaultState.trainingsPerSecond;
-  }
 }
 
 const nextPrice = previousPrice => previousPrice * PRICE_INCREASE_RATE;
