@@ -41,8 +41,8 @@ if (savedState) {
     ...defaultState,
     ...JSON.parse(localStorage.getItem(KEY)),
   };
-  if (defaultState.trainingsPerTick) {
-    delete defaultState.trainingsPerTick;
+  if (defaultState.trainingsPerSecond) {
+    delete defaultState.trainingsPerSecond;
   }
 }
 
@@ -71,10 +71,10 @@ function App({ setScore }) {
 
   const hasWon = useMemo(() => {
     return (
-      upgrades.length === upgradesParsed.length ||
+      upgrades.length === Object.values(upgradesParsed).flatMap(a => a).length ||
       achievementsParsed.achievements.every(
         a =>
-          a.trainings <= trainings && a.trainingsPerTick <= trainingsPerSecond,
+          a.trainings <= trainings && a.trainingsPerSecond <= trainingsPerSecond,
       )
     );
   }, [achievementsParsed, trainings, trainingsPerSecond]);

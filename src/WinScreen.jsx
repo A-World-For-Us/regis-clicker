@@ -14,12 +14,12 @@ function WinScreen(_props) {
       </p>
 
       <a
-        href="https://feat-better-progression.d2sk9y4ym3y2h6.amplifyapp.com/6.png"
+        href="/6.png"
         target="_blank"
         download="badge-jeu-de-noel-2023.png"
       >
         <img
-          src="https://feat-better-progression.d2sk9y4ym3y2h6.amplifyapp.com/6.png"
+          src="/6.png"
           alt="Le badge du Jeu de Noël 2023"
           className="win-screen-img"
         />
