@@ -461,9 +461,9 @@ aside h1 {
   margin: 10px 0;
 }
 
- .welcome {
+.welcome {
   z-index: 1;
-  width: 60vh;
+  width: 75vh;
   min-height: 60vh;
   position: absolute;
   top: 15vh;
@@ -488,7 +488,7 @@ aside h1 {
 }
 
 .welcome img {
-  height: 150px;
+  height: 300px;
   margin: auto;
   border: 5px solid white;
   border-radius: 99999px;
@@ -507,7 +507,6 @@ aside h1 {
   font-weight: 100;
   margin-bottom: 1rem;
   width: 80%;
-
 }
 
 .welcome a {
