@@ -61,9 +61,10 @@ function App({ setScore }) {
     trainings,
     moneys,
     trainingsPerSecond,
-    price,
     upgrades,
     clicks,
+    moneysPerTraining,
+    price,
   } = state;
   const [isAnimated, setIsAnimated] = useState(false);
   const [openTrophies, setOpenTrophies] = useState(false);
@@ -105,7 +106,7 @@ function App({ setScore }) {
       }}
     >
       {upgrades.map(upgrade => {
-        return <Ornament upgrade={upgrade} />;
+        return <Ornament upgrade={upgrade} key={upgrade} />;
       })}
 
       <Snowfall snowflakeCount={70} color="rgba(255, 255, 255, 0.7)" />
@@ -117,7 +118,6 @@ function App({ setScore }) {
             {trainings > 1 ? 'Personnes formées' : 'Personne formée'}:&nbsp;
             {prettyBigNumber(trainings)}
           </p>
-          <IncreaseRate trainingsPerSecond={trainingsPerSecond} clicks={clicks} />
           <p className="moneys">Digidollars : {prettyBigNumber(moneys)} Ð</p>
           <div
             className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
@@ -185,6 +185,9 @@ function App({ setScore }) {
             moneys={moneys}
             dispatch={dispatch}
             price={price}
+            trainingsPerSecond={trainingsPerSecond}
+            moneysPerTraining={moneysPerTraining}
+            clicks={clicks}
           />
         </aside>
       </div>
@@ -192,23 +195,19 @@ function App({ setScore }) {
   );
 }
 
-const IncreaseRate = ({ trainingsPerSecond, clicks }) => {
-  const [clicksPerSecond, setClicksPerSecond] = useState(0);
-  const [lastClicks, setLastClicks] = useState(0);
+const Upgrades = ({
+  current,
+  all,
+  moneys,
+  dispatch,
+  price,
+  trainingsPerSecond,
+  moneysPerTraining,
+  clicks,
+}) => {
+  const level = current.length;
+  const maxLevel = Object.values(all).flat().length;
 
-  useInterval(() => {
-    setClicksPerSecond(clicks - lastClicks);
-    setLastClicks(clicks);
-  }, 1000);
-
-  const increaseRate = trainingsPerSecond + clicksPerSecond * trainingsPerSecond;
-
-  return (
-    <p className="rate">{increaseRate > 0 && <span> +{increaseRate.toFixed(2)}/s</span>}</p>
-  );
-}
-
-const Upgrades = ({ current, all, moneys, dispatch, price }) => {
   const categories = Object.entries(all).map(nameAndUpgrade => {
     const [name, upgrades] = nameAndUpgrade;
     return (
@@ -227,6 +226,13 @@ const Upgrades = ({ current, all, moneys, dispatch, price }) => {
   return (
     <>
       <h1>Améliorations</h1>
+      <Level
+        level={level}
+        maxLevel={maxLevel}
+        clicks={clicks}
+        rate={trainingsPerSecond}
+        moneyRate={moneysPerTraining}
+      />
       {categories}
     </>
   );
@@ -372,6 +378,32 @@ const reducer = (state, { type, name }) => {
       };
     }
   }
+};
+
+const Level = ({ level, maxLevel, moneyRate, clicks, rate }) => {
+  const [clicksPerSecond, setClicksPerSecond] = useState(0);
+  const [lastClicks, setLastClicks] = useState(0);
+
+  useInterval(() => {
+    setClicksPerSecond(clicks - lastClicks);
+    setLastClicks(clicks);
+  }, 1000);
+
+  const increaseRate = rate + clicksPerSecond * rate;
+
+  return (
+    <div className="level-capsule">
+      <p className="level-capsule__title">
+        Niveau {level} / {maxLevel}
+      </p>
+      <p className="level-capsule__text">
+        {formatBigNumber(Math.round(increaseRate))} formations par seconde
+      </p>
+      <p className="level-capsule__text">
+        {formatBigNumber(moneyRate)}Ð par formation
+      </p>
+    </div>
+  );
 };
 
 const formatBigNumber = number => {
