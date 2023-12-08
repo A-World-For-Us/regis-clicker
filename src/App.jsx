@@ -8,8 +8,8 @@ import AchievementsList from './AchievementsList';
 import WinScreen from './WinScreen';
 import Snowfall from 'react-snowfall';
 import Ornament from './Ornament';
-
 import { ParticleCanvas } from './particle_system/ParticleCanvas';
+import Welcome from './Welcome';
 
 const upgradesParsed = toml.parse(upgrades);
 const achievementsParsed = toml.parse(achievements);
@@ -91,7 +91,6 @@ function App({ setScore }) {
     moneysPerTraining,
     price,
   } = state;
-  const [openTrophies, setOpenTrophies] = useState(false);
 
   const hasWon = useMemo(() => {
     return (
@@ -104,6 +103,15 @@ function App({ setScore }) {
       )
     );
   }, [achievementsParsed, trainings, trainingsPerSecond]);
+
+  const [openTrophies, setOpenTrophies] = useState(false);
+  const [openWelcomeScreen, setOpenWelcomeScreen] = useState(
+    shouldShowWelcomeScreen,
+  );
+  const toggleWelcomeScreen = () => {
+    localStorage.setItem('regis-clicker-welcome', false);
+    setOpenWelcomeScreen(!openWelcomeScreen);
+  };
   const [openWinScreen, setOpenWinScreen] = useState(hasWon);
 
   useInterval(() => {
@@ -206,24 +214,26 @@ function App({ setScore }) {
               Continuez comme ça pour explorer toute la Galaxy Digiforma 🪐
             </p>
           )}
-          <div className="has-grow"></div>
+          <div className="button-list">
+            <p className="trophy" onClick={toggleWelcomeScreen}>
+              <div className="trophy-top"></div>
+              <div className="trophy-buckle"></div>
+              🏠
+            </p>
+            <p className="trophy" onClick={() => setOpenTrophies(true)}>
+              <div className="trophy-top"></div>
+              <div className="trophy-buckle"></div>
+              <p>🏆</p>
+            </p>
+          </div>
+          {openWelcomeScreen && <Welcome toggle={toggleWelcomeScreen} />}
           {openTrophies && (
             <AchievementsList
               trainings={trainings}
               trainingsPerSecond={trainingsPerSecond}
             />
           )}
-          <div className="trophy" onClick={() => setOpenTrophies(true)}>
-            <div className="trophy-top"></div>
-            <div className="trophy-buckle"></div>
 
-            <p>🏆</p>
-          </div>
-
-          <Achievements
-            trainings={trainings}
-            trainingsPerSecond={trainingsPerSecond}
-          />
           {hasWon && (
             <>
               <p
@@ -236,6 +246,11 @@ function App({ setScore }) {
               {openWinScreen && <WinScreen />}
             </>
           )}
+
+          <Achievements
+            trainings={trainings}
+            trainingsPerSecond={trainingsPerSecond}
+          />
         </main>
         <aside>
           <Upgrades
@@ -504,6 +519,14 @@ function useInterval(callback, delay) {
 
 function saveState(state) {
   localStorage.setItem(KEY, JSON.stringify(state));
+}
+
+function shouldShowWelcomeScreen() {
+  if (localStorage.getItem('regis-clicker-welcome')) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 function imageName(upgrades) {
