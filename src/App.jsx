@@ -24,16 +24,24 @@ const KEY = 'regis-clicker-save';
 let defaultState = {
   trainings: 0,
   moneys: 0,
+  clicks: 0,
   trainingsPerSecond: 0,
   moneysPerTraining: PRICE_PER_TRAINING,
   price: STARTING_PRICE,
   upgrades: [],
+
+  // Increase rate computation We could use the above but we want to be able
+  // to compute it too when it's raised by manual action such as clicks
+  last: { clicks: 0 },
+  ratePerSecond: { clicks: 0 },
 };
 let savedState = localStorage.getItem(KEY);
 if (savedState) {
-  defaultState = JSON.parse(localStorage.getItem(KEY));
+  defaultState = {
+    ...defaultState,
+    ...JSON.parse(localStorage.getItem(KEY)),
+  };
   if (defaultState.trainingsPerTick) {
-    defaultState.trainingsPerSecond = defaultState.trainingsPerTick;
     delete defaultState.trainingsPerTick;
   }
 }
@@ -49,7 +57,14 @@ const nextMoneysPerTraining = (previousMoneyPerTraining, level) =>
 
 function App({ setScore }) {
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const { trainings, moneys, trainingsPerSecond, price, upgrades } = state;
+  const {
+    trainings,
+    moneys,
+    trainingsPerSecond,
+    price,
+    upgrades,
+    clicks,
+  } = state;
   const [isAnimated, setIsAnimated] = useState(false);
   const [openTrophies, setOpenTrophies] = useState(false);
 
@@ -102,6 +117,7 @@ function App({ setScore }) {
             {trainings > 1 ? 'Personnes formées' : 'Personne formée'}:&nbsp;
             {prettyBigNumber(trainings)}
           </p>
+          <IncreaseRate trainingsPerSecond={trainingsPerSecond} clicks={clicks} />
           <p className="moneys">Digidollars : {prettyBigNumber(moneys)} Ð</p>
           <div
             className={`clicker-wrapper ${isAnimated ? 'train-animation' : ''}`}
@@ -173,6 +189,22 @@ function App({ setScore }) {
         </aside>
       </div>
     </div>
+  );
+}
+
+const IncreaseRate = ({ trainingsPerSecond, clicks }) => {
+  const [clicksPerSecond, setClicksPerSecond] = useState(0);
+  const [lastClicks, setLastClicks] = useState(0);
+
+  useInterval(() => {
+    setClicksPerSecond(clicks - lastClicks);
+    setLastClicks(clicks);
+  }, 1000);
+
+  const increaseRate = trainingsPerSecond + clicksPerSecond * trainingsPerSecond;
+
+  return (
+    <p className="rate">{increaseRate > 0 && <span> +{increaseRate.toFixed(2)}/s</span>}</p>
   );
 }
 
@@ -316,6 +348,7 @@ const reducer = (state, { type, name }) => {
     case 'click': {
       return {
         ...state,
+        clicks: state.clicks + 1,
         trainings: state.trainings + 1 + state.trainingsPerSecond,
         moneys:
           state.moneys +
