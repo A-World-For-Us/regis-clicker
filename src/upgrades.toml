@@ -16,7 +16,7 @@ requirement = ["Digiforma"]
 [[Collaborateurs]]
 name = "Kat Jépété"
 description = "L'intelligence artificielle c'est son dada"
-requirement = ["Multi-Centres", "Audit de Surveillance"]
+requirement = ["Multi-Centres", "Audit de surveillance"]
 
 [["Écosystème"]]
 name = "Formalerte"
@@ -46,7 +46,7 @@ requirement = ["Digiformag 3"]
 [["Écosystème"]]
 name = "Digiformag 5"
 description = "On en est fiers, et on espère que vous aussi"
-requirement = ["Digiformag 5"]
+requirement = ["Digiformag 4"]
 
 [["Écosystème"]]
 name = "OF Connect"

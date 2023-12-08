@@ -153,6 +153,20 @@ aside h1 {
   color: var(--color-dark-green);
 }
 
+.level-capsule {
+  padding: 1rem;
+  margin: 1rem;
+  user-select: none;
+  color: white;
+  border: 2px solid gold;
+  border-radius: 5px;
+}
+
+.level-capsule__title {
+  font-size: 1.5rem;
+  font-family: 'Pacifico', sans-serif;
+}
+
 .upgrade-category {
   padding: 1rem;
   font-family: 'Pacifico', sans-serif;
