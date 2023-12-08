@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toml from 'toml';
 import achievements from './achievements.toml?raw';
 import Achievement from './Achievement';

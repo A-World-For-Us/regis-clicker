@@ -64,10 +64,12 @@ function App({ setScore }) {
 
   const hasWon = useMemo(() => {
     return (
-      upgrades.length === Object.values(upgradesParsed).flatMap(a => a).length ||
+      upgrades.length ===
+        Object.values(upgradesParsed).flatMap(a => a).length ||
       achievementsParsed.achievements.every(
         a =>
-          a.trainings <= trainings && a.trainingsPerSecond <= trainingsPerSecond,
+          a.trainings <= trainings &&
+          a.trainingsPerSecond <= trainingsPerSecond,
       )
     );
   }, [achievementsParsed, trainings, trainingsPerSecond]);
@@ -110,10 +112,10 @@ function App({ setScore }) {
           <div className="title">Cliquer Pour Former</div>
           <div className="subtitle">avec Régis</div>
           <p className="trainings">
-            {trainings > 1 ? 'Personnes formées' : 'Personne formée'}:&nbsp;
+            {trainings > 1 ? 'Personnes formées' : 'Personne formée'}&#x202F;:&#x202F;
             {prettyBigNumber(trainings)}
           </p>
-          <p className="moneys">Digidollars : {prettyBigNumber(moneys)} Ð</p>
+          <p className="moneys">Digidollars&#x202F;:&#x202F;{prettyBigNumber(moneys)} Ð</p>
           <div
             className="clicker-wrapper-outer"
             onClick={e => {
@@ -154,7 +156,7 @@ function App({ setScore }) {
           )}
           {trainings > 0 && trainings < 10 && (
             <p className="clicker-tips">
-              Continuer de cliquer pour donner toujours plus de formations ! 🧑‍🏫
+              Continuez de cliquer pour donner toujours plus de formations ! 🧑‍🏫
             </p>
           )}
           {trainings >= 10 && upgrades.length === 0 && (
@@ -164,7 +166,7 @@ function App({ setScore }) {
           )}
           {trainings < 100 && upgrades.length > 0 && (
             <p className="clicker-tips">
-              Continuez comme ça pour explorer toutes la Galaxy Digiforma 🪐
+              Continuez comme ça pour explorer toute la Galaxy Digiforma 🪐
             </p>
           )}
           <div className="has-grow"></div>
@@ -413,7 +415,8 @@ const Level = ({ level, maxLevel, moneyRate, clicks, rate }) => {
         Niveau {level} / {maxLevel}
       </p>
       <p className="level-capsule__text">
-        {formatBigNumber(Math.round(increaseRate))} formations par seconde
+        {formatBigNumber(Math.round(increaseRate))}{' '}
+        {increaseRate <= 1 ? 'formation' : 'formations'} par seconde
       </p>
       <p className="level-capsule__text">
         {formatBigNumber(moneyRate)}Ð par formation
@@ -423,8 +426,9 @@ const Level = ({ level, maxLevel, moneyRate, clicks, rate }) => {
 };
 
 const formatBigNumber = number => {
-  return Intl.NumberFormat('en-US', {
+  return Intl.NumberFormat('fr-FR', {
     notation: 'compact',
+    maximumFractionDigits: 3,
   }).format(number);
 };
 

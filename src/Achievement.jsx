@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect } from 'react';
 
 function Achievement(props) {
   useEffect(() => {

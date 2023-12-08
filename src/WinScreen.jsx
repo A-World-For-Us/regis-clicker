@@ -13,11 +13,7 @@ function WinScreen(_props) {
         </a>
       </p>
 
-      <a
-        href="/6.png"
-        target="_blank"
-        download="badge-jeu-de-noel-2023.png"
-      >
+      <a href="/6.png" target="_blank" download="badge-jeu-de-noel-2023.png">
         <img
           src="/6.png"
           alt="Le badge du Jeu de Noël 2023"
