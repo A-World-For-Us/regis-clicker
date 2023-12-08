@@ -2,6 +2,7 @@ const Welcome = ({ toggle }) => {
   return (
     <div className="welcome">
       <h1> Cliquez pour former avec l'équipe Digiforma !</h1>
+      <img src="/1.png" alt="voeux 2021" onClick={toggle} />
       <p>
         Une pause bien méritée en cette fin d'année 2023, aidez Régis et
         Pétronille à devenir le plus gros OF de l'Univers (et oui rien que ça).
@@ -31,7 +32,6 @@ const Welcome = ({ toggle }) => {
           à tous ! Rendez-vous en 2024 pour de nouvelles aventures !
         </p>
       )}
-      <img src="/1.png" alt="voeux 2021" onClick={toggle} />
       <button onClick={toggle}>Commencer</button>
     </div>
   );
