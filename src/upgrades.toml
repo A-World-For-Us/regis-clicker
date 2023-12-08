@@ -1,6 +1,6 @@
 [[Collaborateurs]]
 name = "Régis"
-description = "Il est sympa mais un peu désorganisé"
+description = "Il est passionné mais un peu désorganisé"
 buyableTips = ["Bien joué ! Vous avez assez d'argent pour débloquer Régis, cliquez dessus !"]
 
 [[Collaborateurs]]
@@ -35,12 +35,12 @@ requirement = ["Digiformag"]
 
 [["Écosystème"]]
 name = "Digiformag 3"
-description = "Des articles de fond pour les professionnels de la formation"
+description = "Continuez comme ça, à force d'être à la page vous pourrez vous lancer de nouveaux défis"
 requirement = ["Digiformag 2"]
 
 [["Écosystème"]]
 name = "Digiformag 4"
-description = "Dans leur plus belles formes, merci aux illustratrices et aux illustrateurs"
+description = "Des visuels de plus en plus incroyables ! Merci à notre illustratrice !"
 requirement = ["Digiformag 3"]
 
 [["Écosystème"]]
@@ -65,12 +65,12 @@ requirement = ["Régis"]
 
 [[Outils]]
 name = "Digiforma"
-description = "Est-ce qu'il faut encore le présenter ?"
+description = "Faut-il encore le présenter ?"
 requirement = ["Excel"]
 
 [["Modalités"]]
 name = "Salle de classe"
-description = "C'est comme une salle de réunion mais avec des tables"
+description = "Hop ! Au tableau"
 requirement= ["Régis"]
 tips = ["Vous pouvez de nouveau débloquer des améliorations. Continuez de cliquer pour débloquer la Galaxy Digiforma et devenir le plus gros des OF !"]
 
@@ -96,12 +96,12 @@ requirement = ["Digiforma"]
 
 [["Fonctionnalités"]]
 name = "Signature Électronique"
-description = "Pour les OPCO un peu trop tatillons"
+description = "Pour les OPCO tatillons"
 requirement = ["Digiforma"]
 
 [["Fonctionnalités"]]
 name = "Marketplace"
-description = "Rien de mieux que de faire ses courses sur Digiforma"
+description = "Il est temps d'être sur le devant de la scène"
 requirement = ["Digiforma"]
 
 [["Fonctionnalités"]]
@@ -121,12 +121,12 @@ requirement = ["Digiforma", "Une armée de formateurs"]
 
 [[Certifications]]
 name = "Qualiopi"
-description = "Avec Digiforma c'est facile, mais on oublie pas sa veille"
+description = "Heureusement vous avez Digiforma et Qualiopi"
 requirement = ["Digiforma", "Formalerte", "Pétronille"]
 
 [[Certifications]]
 name = "Audit de surveillance"
-description = "Il faut pas se laisser aller"
+description = "Il ne faut pas se laisser aller !"
 requirement = ["Qualiopi", "Pétronille"]
 
 [[Certifications]]
@@ -136,7 +136,7 @@ requirement = ["Audit de surveillance"]
 
 [[Certifications]]
 name = "Référencement RS"
-description = "Claire a l'aide, je sais pas ce que c'est"
+description = "C'est dur, c'est long, mais ça va vous rapporter plein d'apprenants"
 requirement = ["Audit de surveillance 2"]
 
 [["Récompenses"]]

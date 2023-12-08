@@ -22,7 +22,7 @@ const Bandeau = ({ prepend, append }) => (
           année en notre compagnie 🎄
         </span>
       )}
-      <span>🏆 {append} 🏆</span>
+      <span>{append}</span>
     </div>
   </div>
 );

@@ -47,13 +47,29 @@ const Page = () => {
   });
   useEffect(() => {
     if (leaderboardData) {
+      const indexEmoji = index => {
+        switch (index) {
+          case 0:
+            return '🏆';
+          case 1:
+            return '🥈';
+          case 2:
+            return '🥉';
+          default:
+            return '🏅';
+        }
+      };
+
       const leaders = leaderboardData
         .filter(it => it.name && it.score !== 0)
         .slice(0, 3)
-        .map(it => `${it.name}: ${it.score}`)
-        .join(' | ');
+        .map(
+          (it, index) =>
+            `${indexEmoji(index)} ${it.name}: ${formatBigNumber(it.score)}`,
+        )
+        .join(' ');
 
-      setLeaderMessage(`Meilleurs scores du jours : ${leaders}`);
+      setLeaderMessage(`Meilleurs scores du jours  ${leaders}`);
     }
   }, [leaderboardData]);
 
@@ -78,9 +94,9 @@ const Page = () => {
     if (name && myRankData) {
       const { rank, playerCount } = myRankData;
       setRankMessage(
-        `Vous êtes dans le ${Math.round(
-          100 * ((rank + 1) / playerCount),
-        )}% des meilleurs joueurs !`,
+        `Vous êtes dans le top
+        ${Math.round(100 * ((rank + 1) / playerCount))}
+        % des meilleurs joueurs !`,
       );
     }
   }, [score, myRankData, name]);
@@ -104,6 +120,13 @@ const fromLocalStorage = () => {
     );
     return [localName, localId];
   } else return [null, null];
+};
+
+const formatBigNumber = number => {
+  return Intl.NumberFormat('fr-FR', {
+    notation: 'compact',
+    maximumFractionDigits: 3,
+  }).format(number);
 };
 
 export default Page;

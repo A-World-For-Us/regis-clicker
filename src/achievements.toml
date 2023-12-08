@@ -1,7 +1,7 @@
 [[achievements]]
 id = 1
 name = "Une personne formée"
-description = "Il faut bien commencer quelque part ! à vous le NDA !"
+description = "Il faut bien commencer quelque part : à vous le NDA !"
 trainings = 1
 trainingsPerSecond = 0
 
@@ -29,7 +29,7 @@ trainingsPerSecond = 0
 [[achievements]]
 id = 5
 name = "200 personnes formées"
-description = "Hey mais c'est que vous n'êtes plus un si petit formateur !"
+description = "Ça va devenir compliqué tout seul : bientôt besoin d'une équipe"
 trainings = 200
 trainingsPerSecond = 0
 
