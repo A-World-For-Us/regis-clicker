@@ -421,6 +421,7 @@ aside h1 {
   z-index: 1;
   width: 60vh;
   min-height: 60vh;
+  max-height: 70%;
   position: absolute;
   top: 15vh;
   margin: auto 0;
