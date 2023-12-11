@@ -564,6 +564,7 @@ const Multiplier = ({ clicksPerSecond, clicks, dispatch }) => {
       if (onFireProgress > 0) {
         reschedule(500);
       } else if (multiplier > 1) {
+        setOnFireProgress(maxProgress)
         setMultiplier(multiplier - 0.1)
         reschedule(1000);
       }
