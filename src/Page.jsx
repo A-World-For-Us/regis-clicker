@@ -5,7 +5,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import useSWMRMutation from 'swr/mutation';
 
-const ENDPOINT = 'https://pug38ww771.execute-api.eu-west-1.amazonaws.com';
+const ENDPOINT = 'https://l3impq3cu9.execute-api.eu-west-1.amazonaws.com';
 const KEY = 'regis-cliker-id';
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 const postFetcher = async (url, { arg }) => {
@@ -46,7 +46,7 @@ const Page = () => {
     refreshInterval: 5 * 60_000,
   });
   useEffect(() => {
-    if (leaderboardData) {
+    if (leaderboardData && leaderboardData.length > 0) {
       const indexEmoji = index => {
         switch (index) {
           case 0:
@@ -93,11 +93,13 @@ const Page = () => {
   useEffect(() => {
     if (name && myRankData) {
       const { rank, playerCount } = myRankData;
-      setRankMessage(
-        `Vous êtes dans le top
-        ${Math.round(100 * ((rank + 1) / playerCount))}
-        % des meilleurs joueurs !`,
-      );
+      if (rank + 1 !== playerCount) {
+        setRankMessage(
+          `Vous êtes dans le top
+          ${Math.round(100 * ((rank + 1) / playerCount))}
+          % des meilleurs joueurs !`,
+        );
+      }
     }
   }, [score, myRankData, name]);
 
