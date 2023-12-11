@@ -591,15 +591,12 @@ const Multiplier = ({ clicksPerSecond, clicks, dispatch }) => {
   return (
     <div className="level-capsule">
       <p className="level-capsule__title">
-        Clics
+        Clics & Multiplicateur
       </p>
       <p className="level-capsule__text">
         {formatBigNumber(clicks)}{' '}{clicks <= 1 ? 'clic' : 'clics'}{' ('}{clicksPerSecond} par seconde)
       </p>
 
-      <p className="level-capsule__title">
-        Multiplicateur
-      </p>
       <div className="level-capsule__fire-holder">
         <div className="level-capsule__fire-bar" style={{ width: `${onFireProgress / maxProgress * 100}%` }}>
           {multiplier.toFixed(1)}x
