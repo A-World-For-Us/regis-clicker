@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 import { ParticleSystem } from './particles';
 import { GravityForce } from './force';
-import { Vec2, clearCanvas, randomFormationEmoji } from './utils';
+import { Vec2, clearCanvas, formationEmojis, randomFromList } from './utils';
 
 /**
  * Entry function that when called initializes the particle system
@@ -34,7 +34,7 @@ export const startParticleSystem = () => {
         (Math.random() * 2 - 1) * 0.2 - 0.5,
       );
       particleSystem.addParticle(
-        event.detail.emoji || randomFormationEmoji(),
+        randomFromList(event.detail.emojis || formationEmojis),
         new Vec2(event.detail.x, event.detail.y),
         velocity,
       );

@@ -46,7 +46,7 @@ export class Vec2 {
   }
 }
 
-const formationEmoji = [
+export const formationEmojis = [
   '🎓',
   '🎓',
   '🎓',
@@ -64,8 +64,8 @@ const formationEmoji = [
   '🚀',
 ];
 
-export const randomFormationEmoji = () => {
-  return formationEmoji[Math.floor(Math.random() * formationEmoji.length)];
+export const randomFromList = (list) => {
+  return list[Math.floor(Math.random() * list.length)];
 };
 
 /**
