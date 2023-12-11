@@ -229,6 +229,26 @@ aside h1 {
   font-family: 'Pacifico', sans-serif;
 }
 
+.level-capsule__fire-holder {
+  background-color: white;
+  border-radius: 5px;
+  margin: .5rem 0;
+}
+
+.level-capsule__fire-bar {
+  background-color: gold;
+  border-radius: 5px;
+  width: 0%;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
+  color: var(--color-red);
+  font-weight: bold;
+  padding-left: 0.5rem;
+}
+
+.level-capsule__help {
+  font-size: 0.7em;
+}
+
 .upgrade-category {
   padding: 1rem;
   font-family: 'Pacifico', sans-serif;

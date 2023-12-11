@@ -63,6 +63,7 @@ let defaultState = {
   moneysPerTraining: PRICE_PER_TRAINING,
   price: STARTING_PRICE,
   upgrades: [],
+  clicksMultiplier: 1,
 };
 let savedState = localStorage.getItem(KEY);
 if (savedState) {
@@ -92,6 +93,7 @@ function App({ setScore }) {
     moneysPerTraining,
     price,
     supers,
+    clicksMultiplier,
   } = state;
 
   const hasWon = useMemo(() => {
@@ -151,6 +153,7 @@ function App({ setScore }) {
             window.dispatchEvent(
               new CustomEvent('new-particle', {
                 detail: {
+                  emoji: '💸',
                   x: e.clientX,
                   y: e.clientY,
                   count: 10 + 3 * upgrades.length,
@@ -193,12 +196,16 @@ function App({ setScore }) {
                 }, 1);
               });
 
+              let count = Math.min(3, Math.floor(1 + trainingsPerSecond) / 30);
+              count = Math.max(1, count);
+              count = Math.floor(count * clicksMultiplier);
+
               window.dispatchEvent(
                 new CustomEvent('new-particle', {
                   detail: {
                     x: e.clientX,
                     y: e.clientY,
-                    count: Math.min(3, Math.floor(1 + trainingsPerSecond) / 30),
+                    count,
                   },
                 }),
               );
@@ -279,6 +286,7 @@ function App({ setScore }) {
             price={price}
             trainingsPerSecond={trainingsPerSecond}
             moneysPerTraining={moneysPerTraining}
+            clicksMultiplier={clicksMultiplier}
             clicks={clicks}
           />
         </aside>
@@ -295,6 +303,7 @@ const Upgrades = ({
   price,
   trainingsPerSecond,
   moneysPerTraining,
+  clicksMultiplier,
   clicks,
 }) => {
   const level = current.length;
@@ -324,6 +333,8 @@ const Upgrades = ({
         clicks={clicks}
         rate={trainingsPerSecond}
         moneyRate={moneysPerTraining}
+        clicksMultiplier={clicksMultiplier}
+        dispatch={dispatch}
       />
       {categories}
     </>
@@ -433,7 +444,7 @@ const Upgrade = ({
     );
 };
 
-const reducer = (state, { type, name }) => {
+const reducer = (state, { type, name, value }) => {
   switch (type) {
     case 'tick': {
       const newTrainings = state.trainingsPerSecond / TICKS_PER_SECONDS;
@@ -458,15 +469,23 @@ const reducer = (state, { type, name }) => {
     }
 
     case 'click': {
+      const newTrainings = (1 + state.trainingsPerSecond) * state.clicksMultiplier;
       return {
         ...state,
         clicks: state.clicks + 1,
-        trainings: state.trainings + 1 + state.trainingsPerSecond,
+        trainings: state.trainings + newTrainings,
         moneys:
-          state.moneys +
-          (1 + state.trainingsPerSecond) * state.moneysPerTraining,
+          state.moneys + newTrainings * state.moneysPerTraining,
       };
     }
+
+    case 'multiplierValue': {
+      return {
+        ...state,
+        clicksMultiplier: value,
+      };
+    }
+
     case 'buy': {
       return {
         ...state,
@@ -486,30 +505,138 @@ const reducer = (state, { type, name }) => {
   }
 };
 
-const Level = ({ level, maxLevel, moneyRate, clicks, rate }) => {
-  const [clicksPerSecond, setClicksPerSecond] = useState(0);
-  const [lastClicks, setLastClicks] = useState(0);
+// In case it overflows/underflows it sets the max/min
+const useStateWithBounds = (initialValue, min, max) => {
+  const [value, setValue] = useState(initialValue);
+  const setValueWithBounds = newValue => {
+    if (newValue > max) {
+      setValue(max);
+    } else if (newValue < min) {
+      setValue(min);
+    } else {
+      setValue(newValue);
+    }
+  };
+  return [value, setValueWithBounds];
+};
 
-  useInterval(() => {
-    setClicksPerSecond(clicks - lastClicks);
-    setLastClicks(clicks);
-  }, 1000);
+const useResettableTimeout = (callback, delay) => {
+  const savedCallback = useRef();
+  const savedTimeoutId = useRef();
 
-  const increaseRate = rate + clicksPerSecond * rate;
+  // Remember the latest callback function.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  function tick() {
+    if (savedCallback.current) {
+      savedCallback.current(function reschedule(ms) {
+        savedTimeoutId.current = setTimeout(tick, ms);
+      });
+    }
+  }
+
+  useEffect(() => {
+    savedTimeoutId.current = setTimeout(tick, delay);
+
+    return () => {
+      clearTimeout(savedTimeoutId.current);
+    }
+  }, [])
+
+  return () => {
+    clearTimeout(savedTimeoutId.current);
+    savedTimeoutId.current = setTimeout(tick, delay);
+  }
+};
+
+
+const Multiplier = ({ clicksPerSecond, clicks, dispatch }) => {
+  const maxProgress = 50;
+  const minCPS = 5;
+  const [onFireProgress, setOnFireProgress] = useStateWithBounds(0, 0, maxProgress);
+  const [multiplier, setMultiplier] = useStateWithBounds(1, 1, 3);
+
+  const reset = useResettableTimeout((reschedule) => {
+    if (clicksPerSecond < 4) {
+      setOnFireProgress(onFireProgress - 2);
+      if (onFireProgress > 0) {
+        reschedule(500);
+      } else if (multiplier > 1) {
+        setMultiplier(multiplier - 0.1)
+        reschedule(1000);
+      }
+    }
+  }, 2000);
+
+  useEffect(() => {
+    if (clicksPerSecond >= minCPS) {
+      setOnFireProgress(onFireProgress + 3 / multiplier);
+      if ((onFireProgress + 3 / multiplier) >= maxProgress) {
+        setMultiplier(multiplier + 0.1);
+        if (multiplier < 2.9) {
+          setOnFireProgress(0);
+        }
+      }
+    }
+    reset();
+  }, [clicks]);
+
+  useEffect(() => {
+    dispatch({ type: 'multiplierValue', value: multiplier });
+  }, [multiplier]);
 
   return (
     <div className="level-capsule">
       <p className="level-capsule__title">
-        Niveau {level} / {maxLevel}
+        Clics
       </p>
       <p className="level-capsule__text">
-        {formatBigNumber(Math.round(increaseRate))}{' '}
-        {increaseRate <= 1 ? 'formation' : 'formations'} par seconde
+        {formatBigNumber(clicks)}{' '}{clicks <= 1 ? 'clic' : 'clics'}{' ('}{clicksPerSecond} par seconde)
       </p>
-      <p className="level-capsule__text">
-        {formatBigNumber(moneyRate)}Ð par formation
-      </p>
-    </div>
+
+      <div className="level-capsule__fire-holder">
+        <div className="level-capsule__fire-bar" style={{ width: `${onFireProgress / maxProgress * 100}%` }}>
+          {multiplier.toFixed(1)}x
+        </div>
+      </div>
+
+        <p className="level-capsule__help">
+          Multipliez vos clicks jusqu&apos;a 3x en cliquant {minCPS} fois par seconde!
+        </p>
+      </div>
+    )
+}
+
+const Level = ({ level, maxLevel, moneyRate, clicks, rate, clicksMultiplier, dispatch }) => {
+  const [clicksPerSecond, setClicksPerSecond] = useState(0);
+  const [lastClicks, setLastClicks] = useState(clicks);
+
+  useInterval(() => {
+    const newCPS = clicks - lastClicks;
+    setClicksPerSecond(newCPS);
+    setLastClicks(clicks);
+  }, 1000);
+
+  const increaseRate = rate + clicksPerSecond * clicksMultiplier * (rate + 1);
+
+  return (
+    <>
+      <div className="level-capsule">
+        <p className="level-capsule__title">
+          Niveau {level} / {maxLevel}
+        </p>
+        <p className="level-capsule__text">
+          {formatBigNumber(Math.round(increaseRate))}{' '}
+          {increaseRate <= 1 ? 'formation' : 'formations'} par seconde
+        </p>
+        <p className="level-capsule__text">
+          {formatBigNumber(moneyRate)}Ð par formation
+        </p>
+      </div>
+      <Multiplier clicksPerSecond={clicksPerSecond} clicks={clicks} dispatch={dispatch} />
+    </>
   );
 };
 
