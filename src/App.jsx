@@ -260,7 +260,6 @@ function App({ setScore }) {
                   <span className="trophy-buckle"></span>
                   🥇
                 </p>
-                {openWinScreen && <WinScreen />}
               </>
             )}
           </div>
@@ -271,6 +270,7 @@ function App({ setScore }) {
               trainingsPerSecond={trainingsPerSecond}
             />
           )}
+          {openWinScreen && <WinScreen />}
 
           <Achievements
             trainings={trainings}
