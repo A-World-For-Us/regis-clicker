@@ -597,6 +597,9 @@ const Multiplier = ({ clicksPerSecond, clicks, dispatch }) => {
         {formatBigNumber(clicks)}{' '}{clicks <= 1 ? 'clic' : 'clics'}{' ('}{clicksPerSecond} par seconde)
       </p>
 
+      <p className="level-capsule__title">
+        Multiplicateur
+      </p>
       <div className="level-capsule__fire-holder">
         <div className="level-capsule__fire-bar" style={{ width: `${onFireProgress / maxProgress * 100}%` }}>
           {multiplier.toFixed(1)}x
@@ -604,7 +607,7 @@ const Multiplier = ({ clicksPerSecond, clicks, dispatch }) => {
       </div>
 
         <p className="level-capsule__help">
-          Multipliez vos clicks jusqu&apos;a 3x en cliquant {minCPS} fois par seconde!
+          Améliorez l&apos;efficacité de vos clics en cliquant sans vous arrêter&nbsp;!
         </p>
       </div>
     )
