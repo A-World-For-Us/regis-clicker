@@ -153,7 +153,7 @@ function App({ setScore }) {
             window.dispatchEvent(
               new CustomEvent('new-particle', {
                 detail: {
-                  emoji: '💸',
+                  emojis: ['💸', '💸', '💸', '💰', '🤑', '💴', '💵', '💶', '💷', '😎'],
                   x: e.clientX,
                   y: e.clientY,
                   count: 10 + 3 * upgrades.length,
