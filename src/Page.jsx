@@ -5,7 +5,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import useSWMRMutation from 'swr/mutation';
 
-const ENDPOINT = '';
+const ENDPOINT = 'https://l3impq3cu9.execute-api.eu-west-1.amazonaws.com';
 const KEY = 'regis-cliker-id';
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 const postFetcher = async (url, { arg }) => {
