@@ -2,7 +2,7 @@ function WinScreen(_props) {
   return (
     <div className="achievementsList">
       <h1>Bravo ! Vous avez fini le jeu 🥳</h1>
-      <p>Téléchargez le badge du Jeu de Noël 2023.</p>
+      <p><a href="badge-jeu-de-noel-2023.png" download className="win-screen-link">Téléchargez le badge du Jeu de Noël 2023.</a></p>
       <p>
         <a
           href="https://app.digiforma.com/user/custom_badges/new"
