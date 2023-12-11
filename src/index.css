@@ -726,3 +726,21 @@ aside h1 {
   width: 100%;
   height: 100%;
 }
+
+@media screen and (max-width: 1000px) {
+  .clicker-top{
+    display: none;
+  }
+  .clicker-buckle{
+    display: none;
+  }
+}
+
+@media screen and (max-height: 1000px) {
+  .clicker-top{
+    display: none;
+  }
+  .clicker-buckle{
+    display: none;
+  }
+}
